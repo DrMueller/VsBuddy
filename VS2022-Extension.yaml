@@ -1,0 +1,51 @@
+name: 1.0$(rev:.r) # Important: VSIX needs exactly 3digits
+
+variables:
+  BuildConfiguration: 'Release'
+  WorkingDirectory: '$(Build.ArtifactStagingDirectory)/Dist'
+  ManifestJsonPath: 'Sources/Application/extension-manifest.json'
+  
+resources:
+  repositories:
+  - repository: ALMStuff
+    type: github
+    name: DrMueller/ALMStuff
+    ref: refs/heads/master
+    endpoint: GitHub-DrMueller
+
+jobs:
+- job: 'BuildAndPublishVisualStudioExtension'
+  displayName: 'Build and publish Visual Studio Extension'
+  pool:
+    name: Azure Pipelines
+    vmImage: windows-latest
+
+  steps:
+  - task: NuGetToolInstaller@1
+    displayName: 'Use NuGet 4.4.1'
+    inputs:
+      versionSpec: 4.4.1
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore'
+    inputs:
+      vstsFeed: '3c2d9c9a-d8f7-42f4-b7a3-dddf4064110a'
+
+  - task: SamirBoulema.Vsix-Tools.Vsix-Tools-Update-Version.VsixToolsUpdateVersion@2
+    displayName: 'Set VSIX Version'
+    inputs:
+      FileName: Sources/Application/source.extension.vsixmanifest
+      VersionNumber: '$(Build.BuildNumber)'
+
+  - task: VSBuild@1
+    displayName: 'Build with Warnings as Errors'
+    inputs:
+      msbuildArgs: '/p:TreatWarningsAsErrors="true" /p:OutputPath=$(WorkingDirectory) /p:Configuration=$(BuildConfiguration)'
+
+  - task: SamirBoulema.Vsix-Tools.Vsix-Tools-Upload-Vsix.VsixToolsUploadVsix@2
+    displayName: 'Publish VSIX'
+    inputs:
+      UploadTo: Marketplace
+      PublishManifest: $(ManifestJsonPath)
+      PersonalAccessToken: $(PublishToken)
+      WorkingDirectory: $(WorkingDirectory)
