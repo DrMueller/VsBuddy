@@ -1,10 +1,14 @@
 name: 1.0$(rev:.r) # Important: VSIX needs exactly 3digits
 
 variables:
-  BuildConfiguration: 'Release'
-  WorkingDirectory: '$(Build.ArtifactStagingDirectory)/Dist'
-  ManifestJsonPath: 'Sources/Application/extension-manifest.json'
-  
+  - name: BuildConfiguration
+    value: 'Release'
+  - name: WorkingDirectory
+    value: '$(Build.ArtifactStagingDirectory)/Dist'
+  - name: ManifestJsonPath
+    value: 'Sources/Application/extension-manifest.json'
+  - group: VsBuddy
+
 resources:
   repositories:
   - repository: ALMStuff
@@ -40,6 +44,7 @@ jobs:
   - task: VSBuild@1
     displayName: 'Build with Warnings as Errors'
     inputs:
+      solution: VsBuddy.sln
       msbuildArgs: '/p:TreatWarningsAsErrors="true" /p:OutputPath=$(WorkingDirectory) /p:Configuration=$(BuildConfiguration)'
 
   - task: SamirBoulema.Vsix-Tools.Vsix-Tools-Upload-Vsix.VsixToolsUploadVsix@2

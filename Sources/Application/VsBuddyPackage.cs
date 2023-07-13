@@ -20,7 +20,7 @@ namespace VsBuddy
 
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await VsBuddy.Areas.CreateUnitTests.CreateUnitTestsCommand.InitializeAsync(this);
         }
 
