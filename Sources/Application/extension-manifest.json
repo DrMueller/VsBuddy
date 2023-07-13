@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json.schemastore.org/vsix-publish",
+  "categories": [
+    "Coding"
+  ],
+  "identity": {
+    "internalName": "VsBuddy"
+  },
+  "overview": "../../README.md",
+  "priceCategory": "free",
+  "publisher": "DrMueller2",
+  "private": false,
+  "qna": true,
+  "repo": "https://github.com/DrMueller/MLVSH.Testing"
+}
