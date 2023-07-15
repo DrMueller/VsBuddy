@@ -4,6 +4,7 @@
         <Identity Id="VsBuddy.2a15ff23-edd1-4e5e-b9a0-cc1ffe4da22b" Version="1.0" Language="en-US" Publisher="DrMueller2" />
         <DisplayName>VsBuddy</DisplayName>
         <Description xml:space="preserve">DrMuellers Visual Studio Buddy</Description>
+        <Icon>Infrastructure\Assets\M.png</Icon>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
