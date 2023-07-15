@@ -4,6 +4,7 @@ using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using VsBuddy.Areas.Temp.ClassWriting.Orchestration.Services;
 using VsBuddy.Infrastructure.DependencyInjection;
+using VsBuddy.Infrastructure.VisualStudio.Context;
 
 namespace VsBuddy.Areas.Temp.ClassWriting.Orchestration.Commands
 {
@@ -64,8 +65,14 @@ namespace VsBuddy.Areas.Temp.ClassWriting.Orchestration.Commands
                 }
 
                 var filePath = projectItem.FileNames[0];
-                var unitTestClassWriter = ApplicationServiceLocator.GetService<IUnitTestClassWriter>();
-                unitTestClassWriter.CreateTestClass(filePath);
+
+                VsContext.Execute(container =>
+                {
+                    var unitTestClassWriter = container.GetInstance<IUnitTestClassWriter>();
+                    unitTestClassWriter.CreateTestClass(filePath);
+                }, _package);
+
+
             }
         }
     }

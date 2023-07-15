@@ -42,7 +42,7 @@ namespace VsBuddy.Areas.Temp.ClassWriting.SubAreas.ClassContentCreation.Services
             ClassInformation classInfo)
         {
             classInfo.AppendUsing(UsingEntry.CreateFrom("Moq"));
-            classInfo.AppendUsing(UsingEntry.CreateFrom("XUnit"));
+            classInfo.AppendUsing(UsingEntry.CreateFrom("Xunit"));
             classInfo.AppendUsing(UsingEntry.CreateFrom(classInfo.NamespaceDecl));
 
             foreach (var usingName in classInfo.SortedUsingEntries)
@@ -60,9 +60,7 @@ namespace VsBuddy.Areas.Temp.ClassWriting.SubAreas.ClassContentCreation.Services
         {
             var relativeNamespacePart = classInfo
                 .NamespaceDecl;
-            //    .Replace(testConfig.ApplicationProjectBaseNamespace, string.Empty);
 
-            //var nameSpace = testConfig.TestProjectBaseNamespace + relativeNamespacePart;
             var ns = SyntaxFactory
                 .NamespaceDeclaration(SyntaxFactory.ParseName(relativeNamespacePart))
                 .NormalizeWhitespace();

@@ -6,6 +6,7 @@ namespace VsBuddy.Areas.Temp.ClassWriting.SubAreas.TestFileWriting.Services
     {
         void WriteToTestLocation(
             ClassInformation classInfo,
-            string fileContent);
+            string fileContent,
+            string filePath);
     }
 }

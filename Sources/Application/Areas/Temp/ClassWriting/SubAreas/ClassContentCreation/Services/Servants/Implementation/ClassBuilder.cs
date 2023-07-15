@@ -29,6 +29,14 @@ namespace VsBuddy.Areas.Temp.ClassWriting.SubAreas.ClassContentCreation.Services
                 .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
                 .WithBody(SyntaxFactory.Block(statements));
 
+            var attributes = SyntaxFactory.AttributeList(
+                SyntaxFactory.SingletonSeparatedList(
+                    SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("Fact"))
+                )
+            );
+
+            method = method.AddAttributeLists(attributes);
+
             _classDeclaration = _classDeclaration.AddMembers(method);
 
             return this;
@@ -69,6 +77,7 @@ namespace VsBuddy.Areas.Temp.ClassWriting.SubAreas.ClassContentCreation.Services
             {
                 var ctorParam = _classInfo.Constructor.Parameters.ElementAt(i);
                 sb.Append($"_{ctorParam.ParameterName}.Object");
+
                 if (i < _classInfo.Constructor.Parameters.Count - 1)
                 {
                     sb.AppendLine(",");

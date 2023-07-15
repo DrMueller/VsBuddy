@@ -23,9 +23,6 @@ namespace VsBuddy.Infrastructure.DependencyInjection
                 return container;
             });
 
-        public static T GetService<T>()
-        {
-            return _lazyLocator.Value.GetInstance<T>();
-        }
+        public static IContainer Instance => _lazyLocator.Value;
     }
 }

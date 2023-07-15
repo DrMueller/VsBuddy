@@ -2,44 +2,53 @@
 using System.IO.Abstractions;
 using System.Linq;
 using VsBuddy.Areas.Temp.Common.ClassInformations.Models;
+using VsBuddy.Infrastructure.SolutionMetadata.Services;
+using VsBuddy.Infrastructure.VisualStudio.Messaging.Services;
 
 namespace VsBuddy.Areas.Temp.ClassWriting.SubAreas.TestFileWriting.Services.Implementation
 {
     public class TestFileWriter : ITestFileWriter
     {
+        private readonly IVsSolutionFactory _solutionFactory;
         private readonly IFileSystem _fileSystem;
+        private readonly IMessageService _messageService;
 
-        public TestFileWriter(IFileSystem fileSystem)
+        public TestFileWriter(
+            IVsSolutionFactory solutionFactory,
+            IFileSystem fileSystem,
+            IMessageService messageService)
         {
+            _solutionFactory = solutionFactory;
             _fileSystem = fileSystem;
+            _messageService = messageService;
         }
 
         public void WriteToTestLocation(
             ClassInformation classInfo,
-            string fileContent)
+            string fileContent,
+            string filePath)
         {
-            //var fileName = classInfo.ClassName + "UnitTests.cs";
+            var vsSolution = _solutionFactory.Create(filePath);
 
-            //var relativeNamespace = classInfo.NamespaceDecl.Replace(testConfig.ApplicationProjectBaseNamespace, string.Empty);
+            var unitTestsCsProj = vsSolution.SearchUnitTestsByClassNamespace(classInfo.NamespaceDecl);
 
-            //var namespaceParts = relativeNamespace.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
-            //var namespaceQueue = new Queue<string>(namespaceParts);
+            var rootPath = unitTestsCsProj.AssemblyName.Replace("UnitTests", string.Empty);
+            var relativePath = classInfo.NamespaceDecl.Replace(rootPath, string.Empty);
+            var path = relativePath.Replace(".", "\\");
+            var fullpath = _fileSystem.Path.Combine(unitTestsCsProj.AssemblyPath, path);
 
-            //var currentDirInfo = _fileSystem
-            //    .DirectoryInfo
-            //    .FromDirectoryName(testConfig.TestProjectBasePath);
+            var fullName = _fileSystem.Path.Combine(fullpath, $"{classInfo.ClassName}UnitTests.cs");
 
-            //AssurePathExists(currentDirInfo, namespaceQueue);
+            if (_fileSystem.File.Exists(fullName))
+            {
+                _messageService.ShowMessage($"File {fullName} already existing.");
 
-            //var pathParts = new List<string>
-            //{
-            //    testConfig.TestProjectBasePath
-            //}.Concat(namespaceParts).ToArray();
+                return;
+            }
+            
+            _fileSystem.File.WriteAllText(fullName, fileContent);
 
-            //var fullPath = _fileSystem.Path.Combine(pathParts);
-
-            //var fullFileName = _fileSystem.Path.Combine(fullPath, fileName);
-            //_fileSystem.File.WriteAllText(fullFileName, fileContent);
+            _messageService.ShowMessage($"File {fullName} created.");
         }
 
         private static void AssurePathExists(IDirectoryInfo dirInfo, Queue<string> nameSpaceParts)

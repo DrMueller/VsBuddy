@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using VsBuddy.Areas.Temp.ClassWriting.Orchestration.Services;
 using VsBuddy.Areas.Temp.SetupTestClass.Services;
 using VsBuddy.Infrastructure.DependencyInjection;
+using VsBuddy.Infrastructure.VisualStudio.Context;
 
 namespace VsBuddy.Areas.CreateUnitTests
 {
@@ -107,9 +108,16 @@ namespace VsBuddy.Areas.CreateUnitTests
                 }
 
                 var filePath = projectItem.FileNames[0];
-                var unitTestClassWriter = ApplicationServiceLocator.GetService<IUnitTestClassWriter>();
-                unitTestClassWriter.CreateTestClass(filePath);
-
+         
+                VsContext
+                    .Execute(container =>
+                    {
+                        var tra = container.GetInstance<ITestClassSetupService>();
+                        tra.SetupTestClass(filePath);
+                        var unitTestClassWriter = container.GetInstance<IUnitTestClassWriter>();
+                        unitTestClassWriter.CreateTestClass(filePath);
+                    }, _package);
+                
                 break;
             }
         }

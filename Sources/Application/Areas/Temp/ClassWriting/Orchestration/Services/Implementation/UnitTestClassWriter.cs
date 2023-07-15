@@ -1,4 +1,5 @@
-﻿using VsBuddy.Areas.Temp.ClassWriting.SubAreas.ClassContentCreation.Services;
+﻿using Microsoft.VisualStudio.OLE.Interop;
+using VsBuddy.Areas.Temp.ClassWriting.SubAreas.ClassContentCreation.Services;
 using VsBuddy.Areas.Temp.ClassWriting.SubAreas.TestFileWriting.Services;
 using VsBuddy.Areas.Temp.Common.ClassInformations.Services;
 
@@ -24,7 +25,7 @@ namespace VsBuddy.Areas.Temp.ClassWriting.Orchestration.Services.Implementation
         {
             var classInfo = _classInfoFactory.Create(fileToTestPath);
             var classContent = _classContentFactory.CreateContent(classInfo);
-            _testFileWriter.WriteToTestLocation(classInfo, classContent);
+            _testFileWriter.WriteToTestLocation(classInfo, classContent, fileToTestPath);
         }
     }
 }

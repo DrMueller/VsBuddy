@@ -17,13 +17,11 @@ namespace VsBuddy.Areas.Temp.Common.ClassInformations.Models
             string className,
             string namespaceDecl,
             Constructor constructor,
-            List<UsingEntry> usingEntries,
-            Assembly containingAssembly)
+            List<UsingEntry> usingEntries)
         {
             ClassName = className;
             NamespaceDecl = namespaceDecl;
             Constructor = constructor;
-            ContainingAssembly = containingAssembly;
             _usingEntries = usingEntries;
         }
 
