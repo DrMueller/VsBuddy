@@ -28,12 +28,12 @@ namespace VsBuddy.Areas.CreateUnitTests.Orchestration.Services.Implementation
         {
             var vsSolution = _vsSolutionFactory.Create(fileToTestPath);
             var classInfo = _classInfoFactory.Create(fileToTestPath);
-            var unitTestsCsProj = vsSolution.SearchbyNamespace(classInfo.NamespaceDecl, "UnitTests");
+            var unitTestsCsProj = vsSolution.SearchByNamespace(classInfo.NamespaceDecl, "UnitTests");
 
-            var classCsProj = vsSolution.SearchbyNamespace(classInfo.NamespaceDecl);
+            var classCsProj = vsSolution.SearchByNamespace(classInfo.NamespaceDecl);
 
             var classContent = _classContentFactory.CreateContent(classInfo, classCsProj, unitTestsCsProj);
-            _testFileWriter.WriteToTestLocation(classInfo, classContent, fileToTestPath, unitTestsCsProj);
+            _testFileWriter.WriteToTestLocation(classInfo, classContent, unitTestsCsProj);
         }
     }
 }

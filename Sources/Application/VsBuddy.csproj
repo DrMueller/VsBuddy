@@ -45,6 +45,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Areas\CreateResx\CreateResxCommand.cs" />
+    <Compile Include="Areas\CreateResx\Orchestration\ICreateResxOrchestrator.cs" />
+    <Compile Include="Areas\CreateResx\Orchestration\Implementation\CreateResxOrchestrator.cs" />
+    <Compile Include="Areas\CreateResx\SubAreas\ResxWriting\Services\Implementation\ResxWriter.cs" />
+    <Compile Include="Areas\CreateResx\SubAreas\ResxWriting\Services\IResxWriter.cs" />
+    <Compile Include="Infrastructure\FilreWriting\Services\IFileWriter.cs" />
+    <Compile Include="Infrastructure\FilreWriting\Services\Implementation\FileWriter.cs" />
     <Compile Include="Infrastructure\Roslyn\ClassInformations\Models\ClassInformation.cs" />
     <Compile Include="Infrastructure\Roslyn\ClassInformations\Models\Constructor.cs" />
     <Compile Include="Infrastructure\Roslyn\ClassInformations\Models\Parameter.cs" />
@@ -121,15 +128,14 @@
       <Version>4.3.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\CreateResx\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <VSCTCompile Include="Areas\CreateUnitTests\VsBuddyPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\CreateResx\Resources\CreateResxCommand.png" />
     <Content Include="Areas\CreateUnitTests\Resources\CreateUnitTestsCommand.png" />
     <Content Include="Infrastructure\Assets\M.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

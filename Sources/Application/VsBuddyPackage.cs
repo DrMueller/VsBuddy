@@ -23,6 +23,7 @@ namespace VsBuddy
         {
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await CreateUnitTestsCommand.InitializeAsync(this);
+            await VsBuddy.Areas.CreateResx.CreateResxCommand.InitializeAsync(this);
         }
 
         #endregion

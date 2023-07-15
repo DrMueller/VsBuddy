@@ -8,7 +8,6 @@ namespace VsBuddy.Areas.CreateUnitTests.SubAreas.TestFileWriting.Services
         void WriteToTestLocation(
             ClassInformation classInfo,
             string fileContent,
-            string filePath,
             CsProj unitTestsCsProj);
     }
 }

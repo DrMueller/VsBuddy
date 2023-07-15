@@ -21,7 +21,7 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Models
             Projects = projects;
         }
 
-        public CsProj SearchbyNamespace(
+        public CsProj SearchByNamespace(
             string classNamespace,
             string extension = null)
         {
