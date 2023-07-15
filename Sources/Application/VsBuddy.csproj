@@ -45,21 +45,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Areas\CreateUnitTests\ClassInformations\Models\ClassInformation.cs" />
-    <Compile Include="Areas\CreateUnitTests\ClassInformations\Models\Constructor.cs" />
-    <Compile Include="Areas\CreateUnitTests\ClassInformations\Models\Parameter.cs" />
-    <Compile Include="Areas\CreateUnitTests\ClassInformations\Models\UsingEntry.cs" />
-    <Compile Include="Areas\CreateUnitTests\ClassInformations\Services\IClassInformationFactory.cs" />
-    <Compile Include="Areas\CreateUnitTests\ClassInformations\Services\Implementation\ClassInformationFactory.cs" />
-    <Compile Include="Areas\CreateUnitTests\Services\Orchestration\Services\Implementation\UnitTestClassWriter.cs" />
-    <Compile Include="Areas\CreateUnitTests\Services\Orchestration\Services\IUnitTestClassWriter.cs" />
-    <Compile Include="Areas\CreateUnitTests\Services\SubAreas\ClassContentCreation\Services\IClassContentFactory.cs" />
-    <Compile Include="Areas\CreateUnitTests\Services\SubAreas\ClassContentCreation\Services\Implementation\ClassContentFactory.cs" />
-    <Compile Include="Areas\CreateUnitTests\Services\SubAreas\ClassContentCreation\Services\Servants\IClassBuilder.cs" />
-    <Compile Include="Areas\CreateUnitTests\Services\SubAreas\ClassContentCreation\Services\Servants\Implementation\ClassBuilder.cs" />
-    <Compile Include="Areas\CreateUnitTests\Services\SubAreas\TestFileWriting\Models\TestClassFile.cs" />
-    <Compile Include="Areas\CreateUnitTests\Services\SubAreas\TestFileWriting\Services\Implementation\TestFileWriter.cs" />
-    <Compile Include="Areas\CreateUnitTests\Services\SubAreas\TestFileWriting\Services\ITestFileWriter.cs" />
+    <Compile Include="Infrastructure\Roslyn\ClassInformations\Models\ClassInformation.cs" />
+    <Compile Include="Infrastructure\Roslyn\ClassInformations\Models\Constructor.cs" />
+    <Compile Include="Infrastructure\Roslyn\ClassInformations\Models\Parameter.cs" />
+    <Compile Include="Infrastructure\Roslyn\ClassInformations\Models\UsingEntry.cs" />
+    <Compile Include="Infrastructure\Roslyn\ClassInformations\Services\IClassInformationFactory.cs" />
+    <Compile Include="Infrastructure\Roslyn\ClassInformations\Services\Implementation\ClassInformationFactory.cs" />
+    <Compile Include="Areas\CreateUnitTests\Orchestration\Services\Implementation\UnitTestClassWriter.cs" />
+    <Compile Include="Areas\CreateUnitTests\Orchestration\Services\IUnitTestClassWriter.cs" />
+    <Compile Include="Areas\CreateUnitTests\SubAreas\ClassContentCreation\Services\IClassContentFactory.cs" />
+    <Compile Include="Areas\CreateUnitTests\SubAreas\ClassContentCreation\Services\Implementation\ClassContentFactory.cs" />
+    <Compile Include="Areas\CreateUnitTests\SubAreas\ClassContentCreation\Services\Servants\IClassBuilder.cs" />
+    <Compile Include="Areas\CreateUnitTests\SubAreas\ClassContentCreation\Services\Servants\Implementation\ClassBuilder.cs" />
+    <Compile Include="Areas\CreateUnitTests\SubAreas\TestFileWriting\Models\TestClassFile.cs" />
+    <Compile Include="Areas\CreateUnitTests\SubAreas\TestFileWriting\Services\Implementation\TestFileWriter.cs" />
+    <Compile Include="Areas\CreateUnitTests\SubAreas\TestFileWriting\Services\ITestFileWriter.cs" />
     <Compile Include="Areas\CreateUnitTests\CreateUnitTestsCommand.cs" />
     <Compile Include="Infrastructure\DependencyInjection\ApplicationRegistry.cs" />
     <Compile Include="Infrastructure\DependencyInjection\ApplicationServiceLocator.cs" />

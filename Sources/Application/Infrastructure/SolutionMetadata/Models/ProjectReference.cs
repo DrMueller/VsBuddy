@@ -4,11 +4,6 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Models
 {
     public class ProjectReference
     {
-        public ProjectReference(string relativePath)
-        {
-            RelativePath = relativePath;
-        }
-
         public string AssemblyName
         {
             get
@@ -20,5 +15,10 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Models
         }
 
         private string RelativePath { get; }
+
+        public ProjectReference(string relativePath)
+        {
+            RelativePath = relativePath;
+        }
     }
 }

@@ -5,8 +5,8 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Services.Implementation
 {
     public class VsSolutionFactory : IVsSolutionFactory
     {
-        private readonly ICsProjectFilesLocator _csProjLocator;
         private readonly ICsProjectFactory _csProjFactory;
+        private readonly ICsProjectFilesLocator _csProjLocator;
 
         public VsSolutionFactory(
             ICsProjectFilesLocator csProjLocator,
@@ -15,6 +15,7 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Services.Implementation
             _csProjLocator = csProjLocator;
             _csProjFactory = csProjFactory;
         }
+
         public VsSolution Create(string sourceFilePath)
         {
             var allProjFiles = _csProjLocator.GetAllCsProjFiles(sourceFilePath);

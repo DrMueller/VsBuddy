@@ -3,7 +3,7 @@ using System.ComponentModel.Design;
 using System.Threading.Tasks;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
-using VsBuddy.Areas.CreateUnitTests.Services.Orchestration.Services;
+using VsBuddy.Areas.CreateUnitTests.Orchestration.Services;
 using VsBuddy.Infrastructure.VisualStudio.Context;
 
 namespace VsBuddy.Areas.CreateUnitTests
@@ -79,7 +79,9 @@ namespace VsBuddy.Areas.CreateUnitTests
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
+#pragma warning disable VSTHRD100 // Avoid async void methods
         private async void Execute(object sender, EventArgs e)
+#pragma warning restore VSTHRD100 // Avoid async void methods
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(_package.DisposalToken);
 

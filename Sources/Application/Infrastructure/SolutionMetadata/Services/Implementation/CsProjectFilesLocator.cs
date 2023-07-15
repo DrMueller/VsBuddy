@@ -9,6 +9,7 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Services.Implementation
         public IReadOnlyCollection<string> GetAllCsProjFiles(string sourceFilePath)
         {
             var sourcesDir = GetSourcesDirectory(sourceFilePath);
+
             return Directory
                 .GetFiles(sourcesDir.FullName, "*.csproj", SearchOption.AllDirectories)
                 .ToList();

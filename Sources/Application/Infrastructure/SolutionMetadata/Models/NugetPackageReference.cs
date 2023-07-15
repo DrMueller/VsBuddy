@@ -4,13 +4,13 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Models
 {
     public class NugetPackageReference : IEquatable<NugetPackageReference>
     {
+        public string PackageName { get; }
+
         public NugetPackageReference(
             string packageName)
         {
             PackageName = packageName;
         }
-
-        public string PackageName { get; }
 
         public bool Equals(NugetPackageReference other)
         {

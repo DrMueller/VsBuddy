@@ -29,7 +29,6 @@ namespace VsBuddy.Infrastructure.VisualStudio.Messaging.Services.Implementation
                 default:
                     return OLEMSGICON.OLEMSGICON_INFO;
             }
-            
         }
     }
 }

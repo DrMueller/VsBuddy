@@ -4,6 +4,13 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Models
 {
     public class CsProj
     {
+        public string AssemblyName { get; }
+        public string AssemblyPath { get; }
+        public EmbeddedResources EmbeddedResources { get; }
+        public IReadOnlyCollection<NugetPackageReference> NugetReferences { get; }
+        public IReadOnlyCollection<ProjectReference> ProjectReferences { get; }
+        public PropertyGroup PropertyGroup { get; }
+
         public CsProj(
             string assemblyPath,
             string assemblyName,
@@ -19,12 +26,5 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Models
             PropertyGroup = propertyGroup;
             EmbeddedResources = embeddedResources;
         }
-
-        public string AssemblyName { get; }
-        public string AssemblyPath { get; }
-        public EmbeddedResources EmbeddedResources { get; }
-        public IReadOnlyCollection<NugetPackageReference> NugetReferences { get; }
-        public IReadOnlyCollection<ProjectReference> ProjectReferences { get; }
-        public PropertyGroup PropertyGroup { get; }
     }
 }

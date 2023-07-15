@@ -2,6 +2,9 @@
 {
     public class PropertyGroup
     {
+        public bool GenerateAssemblyInfo { get; }
+        public bool NullableEnabled { get; }
+
         public PropertyGroup(
             bool nullableEnabled,
             bool generateAssemblyInfo)
@@ -9,9 +12,6 @@
             NullableEnabled = nullableEnabled;
             GenerateAssemblyInfo = generateAssemblyInfo;
         }
-
-        public bool GenerateAssemblyInfo { get; }
-        public bool NullableEnabled { get; }
 
         public static PropertyGroup CreateEmpty()
         {
