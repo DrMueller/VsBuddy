@@ -1,13 +1,9 @@
 ﻿using System;
 using System.ComponentModel.Design;
-using System.Globalization;
 using System.Threading.Tasks;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using VsBuddy.Areas.Temp.ClassWriting.Orchestration.Services;
-using VsBuddy.Areas.Temp.SetupTestClass.Services;
-using VsBuddy.Infrastructure.DependencyInjection;
+using VsBuddy.Areas.CreateUnitTests.Services.Orchestration.Services;
 using VsBuddy.Infrastructure.VisualStudio.Context;
 
 namespace VsBuddy.Areas.CreateUnitTests
@@ -86,8 +82,9 @@ namespace VsBuddy.Areas.CreateUnitTests
         private async void Execute(object sender, EventArgs e)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(_package.DisposalToken);
-            
+
             var dte = (DTE)await _package.GetServiceAsync(typeof(DTE));
+
             if (dte == null)
             {
                 throw new ArgumentNullException(nameof(dte));
@@ -108,16 +105,14 @@ namespace VsBuddy.Areas.CreateUnitTests
                 }
 
                 var filePath = projectItem.FileNames[0];
-         
+
                 VsContext
                     .Execute(container =>
                     {
-                        var tra = container.GetInstance<ITestClassSetupService>();
-                        tra.SetupTestClass(filePath);
                         var unitTestClassWriter = container.GetInstance<IUnitTestClassWriter>();
                         unitTestClassWriter.CreateTestClass(filePath);
                     }, _package);
-                
+
                 break;
             }
         }

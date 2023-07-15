@@ -45,41 +45,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Areas\Temp\ClassWriting\Orchestration\Commands\CreateUnitTestClassCommand.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\Orchestration\Commands\CreateUnitTestClassCommandPackage.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\Orchestration\Services\Implementation\UnitTestClassWriter.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\Orchestration\Services\IUnitTestClassWriter.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\SubAreas\ClassContentCreation\Services\IClassContentFactory.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\SubAreas\ClassContentCreation\Services\Implementation\ClassContentFactory.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\SubAreas\ClassContentCreation\Services\Servants\IClassBuilder.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\SubAreas\ClassContentCreation\Services\Servants\Implementation\ClassBuilder.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\SubAreas\TestFileWriting\Models\TestClassFile.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\SubAreas\TestFileWriting\Services\Implementation\TestFileWriter.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\SubAreas\TestFileWriting\Services\ITestFileWriter.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\SubAreas\TestFrameworks\Models\Frameworks\Nunit.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\SubAreas\TestFrameworks\Models\Frameworks\Xunit.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\SubAreas\TestFrameworks\Models\ITestFramework.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\SubAreas\TestFrameworks\Models\TestAttribute.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\SubAreas\TestFrameworks\Models\TestClassSetup.cs" />
-    <Compile Include="Areas\Temp\ClassWriting\SubAreas\TestFrameworks\Models\TestClassSetupType.cs" />
-    <Compile Include="Areas\Temp\Common\ClassInformations\Models\ClassInformation.cs" />
-    <Compile Include="Areas\Temp\Common\ClassInformations\Models\Constructor.cs" />
-    <Compile Include="Areas\Temp\Common\ClassInformations\Models\Parameter.cs" />
-    <Compile Include="Areas\Temp\Common\ClassInformations\Models\UsingEntry.cs" />
-    <Compile Include="Areas\Temp\Common\ClassInformations\Services\IClassInformationFactory.cs" />
-    <Compile Include="Areas\Temp\Common\ClassInformations\Services\Implementation\ClassInformationFactory.cs" />
+    <Compile Include="Areas\CreateUnitTests\ClassInformations\Models\ClassInformation.cs" />
+    <Compile Include="Areas\CreateUnitTests\ClassInformations\Models\Constructor.cs" />
+    <Compile Include="Areas\CreateUnitTests\ClassInformations\Models\Parameter.cs" />
+    <Compile Include="Areas\CreateUnitTests\ClassInformations\Models\UsingEntry.cs" />
+    <Compile Include="Areas\CreateUnitTests\ClassInformations\Services\IClassInformationFactory.cs" />
+    <Compile Include="Areas\CreateUnitTests\ClassInformations\Services\Implementation\ClassInformationFactory.cs" />
+    <Compile Include="Areas\CreateUnitTests\Services\Orchestration\Services\Implementation\UnitTestClassWriter.cs" />
+    <Compile Include="Areas\CreateUnitTests\Services\Orchestration\Services\IUnitTestClassWriter.cs" />
+    <Compile Include="Areas\CreateUnitTests\Services\SubAreas\ClassContentCreation\Services\IClassContentFactory.cs" />
+    <Compile Include="Areas\CreateUnitTests\Services\SubAreas\ClassContentCreation\Services\Implementation\ClassContentFactory.cs" />
+    <Compile Include="Areas\CreateUnitTests\Services\SubAreas\ClassContentCreation\Services\Servants\IClassBuilder.cs" />
+    <Compile Include="Areas\CreateUnitTests\Services\SubAreas\ClassContentCreation\Services\Servants\Implementation\ClassBuilder.cs" />
+    <Compile Include="Areas\CreateUnitTests\Services\SubAreas\TestFileWriting\Models\TestClassFile.cs" />
+    <Compile Include="Areas\CreateUnitTests\Services\SubAreas\TestFileWriting\Services\Implementation\TestFileWriter.cs" />
+    <Compile Include="Areas\CreateUnitTests\Services\SubAreas\TestFileWriting\Services\ITestFileWriter.cs" />
     <Compile Include="Areas\CreateUnitTests\CreateUnitTestsCommand.cs" />
-    <Compile Include="Areas\Temp\SetupTestClass\Commands\SetupTestClassCommand.cs" />
-    <Compile Include="Areas\Temp\SetupTestClass\Services\Implementation\TestClassSetupService.cs" />
-    <Compile Include="Areas\Temp\SetupTestClass\Services\ITestClassSetupService.cs" />
-    <Compile Include="Areas\Temp\SetupTestClass\Services\Servants\IConstructorSyntaxFactory.cs" />
-    <Compile Include="Areas\Temp\SetupTestClass\Services\Servants\IFieldSyntaxFactory.cs" />
-    <Compile Include="Areas\Temp\SetupTestClass\Services\Servants\Implementation\ConstructorSyntaxFactory.cs" />
-    <Compile Include="Areas\Temp\SetupTestClass\Services\Servants\Implementation\FieldSyntaxFactory.cs" />
-    <Compile Include="Areas\Temp\SetupTestClass\Services\Servants\Implementation\TestSetupWriter.cs" />
-    <Compile Include="Areas\Temp\SetupTestClass\Services\Servants\Implementation\ValueAligner.cs" />
-    <Compile Include="Areas\Temp\SetupTestClass\Services\Servants\ITestSetupWriter.cs" />
-    <Compile Include="Areas\Temp\SetupTestClass\Services\Servants\IValueAligner.cs" />
     <Compile Include="Infrastructure\DependencyInjection\ApplicationRegistry.cs" />
     <Compile Include="Infrastructure\DependencyInjection\ApplicationServiceLocator.cs" />
     <Compile Include="Infrastructure\SolutionMetadata\Models\CsProj.cs" />
@@ -96,6 +77,7 @@
     <Compile Include="Infrastructure\SolutionMetadata\Services\Implementation\VsSolutionFactory.cs" />
     <Compile Include="Infrastructure\SolutionMetadata\Services\IVsSolutionFactory.cs" />
     <Compile Include="Infrastructure\VisualStudio\Context\VsContext.cs" />
+    <Compile Include="Infrastructure\VisualStudio\Messaging\Models\MessageType.cs" />
     <Compile Include="Infrastructure\VisualStudio\Messaging\Services\IMessageService.cs" />
     <Compile Include="Infrastructure\VisualStudio\Messaging\Services\Implementation\MessageService.cs" />
     <Compile Include="Infrastructure\VisualStudio\ServiceProviders\ServiceProviderSingleton.cs" />
@@ -141,8 +123,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\CreateResx\" />
-    <Folder Include="Areas\CreateUnitTests\Models\" />
-    <Folder Include="Areas\CreateUnitTests\Services\" />
     <Folder Include="Infrastructure\PathResolution\Services\" />
   </ItemGroup>
   <ItemGroup>
@@ -151,11 +131,7 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Temp\ClassWriting\Orchestration\Commands\CreateUnitTestClassCommandPackage.vsct" />
-    <Content Include="Areas\Temp\ClassWriting\Orchestration\Commands\Resources\CreateUnitTestClassCommand.png" />
-    <Content Include="Areas\Temp\ClassWriting\Orchestration\Commands\Resources\CreateUnitTestClassCommandPackage.ico" />
     <Content Include="Areas\CreateUnitTests\Resources\CreateUnitTestsCommand.png" />
-    <Content Include="Areas\Temp\SetupTestClass\Commands\Resources\SetupTestClassCommand.png" />
     <Content Include="Infrastructure\Assets\M.png" />
     <Content Include="TODOs.txt" />
   </ItemGroup>

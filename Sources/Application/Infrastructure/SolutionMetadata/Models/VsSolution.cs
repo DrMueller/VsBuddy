@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace VsBuddy.Infrastructure.SolutionMetadata.Models
@@ -13,23 +14,29 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Models
                 "Microsoft.NET.Test.Sdk"
             };
 
+        public IReadOnlyCollection<CsProj> Projects { get; }
+
         public VsSolution(IReadOnlyCollection<CsProj> projects)
         {
             Projects = projects;
         }
 
-        public IReadOnlyCollection<CsProj> Projects { get; }
-
-        public CsProj SearchUnitTestsByClassNamespace(string classNamespace)
+        public CsProj SearchbyNamespace(
+            string classNamespace,
+            string extension = null)
         {
             var split = classNamespace.Split('.');
 
             for (var i = split.Length; i > 0; i--)
             {
                 var tryPart = string.Join(".", split.Take(i));
-                var searchName = $"{tryPart}.UnitTests";
 
-                var csProj = Projects.FirstOrDefault(p => p.AssemblyName == searchName);
+                if (!string.IsNullOrEmpty(extension))
+                {
+                    tryPart = $"{tryPart}.{extension}";
+                }
+
+                var csProj = Projects.FirstOrDefault(p => p.AssemblyName == tryPart);
 
                 if (csProj != null)
                 {
@@ -37,8 +44,7 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Models
                 }
             }
 
-            throw new System.Exception("Unit tests project not found.");
-
+            throw new Exception($"Project with namespace {classNamespace} not found.");
         }
     }
 }
