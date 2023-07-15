@@ -123,7 +123,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\CreateResx\" />
-    <Folder Include="Infrastructure\PathResolution\Services\" />
   </ItemGroup>
   <ItemGroup>
     <VSCTCompile Include="Areas\CreateUnitTests\VsBuddyPackage.vsct">
