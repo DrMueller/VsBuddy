@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell;
+using VsBuddy.Areas.CreateResx;
 using VsBuddy.Areas.CreateUnitTests;
 
 namespace VsBuddy
@@ -23,7 +24,7 @@ namespace VsBuddy
         {
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await CreateUnitTestsCommand.InitializeAsync(this);
-            await VsBuddy.Areas.CreateResx.CreateResxCommand.InitializeAsync(this);
+            await CreateResxCommand.InitializeAsync(this);
         }
 
         #endregion

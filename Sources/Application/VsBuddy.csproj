@@ -130,18 +130,17 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <VSCTCompile Include="Areas\CreateUnitTests\VsBuddyPackage.vsct">
+    <VSCTCompile Include="VsBuddyPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\CreateResx\Resources\CreateResxCommand.png" />
-    <Content Include="Areas\CreateUnitTests\Resources\CreateUnitTestsCommand.png" />
+    <Content Include="Infrastructure\Assets\CreateResxCommand.png" />
+    <Content Include="Infrastructure\Assets\CreateUnitTestsCommand.png" />
     <Content Include="Infrastructure\Assets\M.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="TODOs.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

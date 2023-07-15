@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VsBuddy.Areas.CreateResx.SubAreas.ResxWriting
+﻿namespace VsBuddy.Areas.CreateResx.SubAreas.ResxWriting.Services
 {
     public interface IResxWriter
     {

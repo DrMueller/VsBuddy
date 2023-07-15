@@ -17,18 +17,6 @@ namespace VsBuddy.Infrastructure.FilreWriting.Services.Implementation
             _fileSystem = fileSystem;
         }
 
-        public void WriteFile(string filePath, string content)
-        {
-            if (CheckVerifyFilePath(filePath))
-            {
-                return;
-            }
-
-            _fileSystem.File.WriteAllText(filePath, content);
-
-            _messageService.ShowMessage($"File '{filePath}' created.", MessageType.Info);
-        }
-
         public bool CheckVerifyFilePath(string filePath)
         {
             if (_fileSystem.File.Exists(filePath))
@@ -44,7 +32,18 @@ namespace VsBuddy.Infrastructure.FilreWriting.Services.Implementation
             }
 
             return false;
+        }
 
+        public void WriteFile(string filePath, string content)
+        {
+            if (CheckVerifyFilePath(filePath))
+            {
+                return;
+            }
+
+            _fileSystem.File.WriteAllText(filePath, content);
+
+            _messageService.ShowMessage($"File '{filePath}' created.", MessageType.Info);
         }
     }
 }

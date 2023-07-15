@@ -1,16 +1,15 @@
 ﻿using System.IO.Abstractions;
 using System.Resources;
-using VsBuddy.Areas.CreateResx.SubAreas.ResxWriting;
 using VsBuddy.Infrastructure.FilreWriting.Services;
 using VsBuddy.Infrastructure.VisualStudio.Messaging.Models;
 using VsBuddy.Infrastructure.VisualStudio.Messaging.Services;
 
-namespace VsBuddy.Areas.CreateResx.SubAreas.ResxCreating.Services.Implementation
+namespace VsBuddy.Areas.CreateResx.SubAreas.ResxWriting.Services.Implementation
 {
     public class ResxWriter : IResxWriter
     {
-        private readonly IFileWriter _fileWriter;
         private readonly IFileSystem _fileSstem;
+        private readonly IFileWriter _fileWriter;
         private readonly IMessageService _messageService;
 
         public ResxWriter(
@@ -26,6 +25,7 @@ namespace VsBuddy.Areas.CreateResx.SubAreas.ResxCreating.Services.Implementation
         public void WriteEmptyResx(string targetFilePath)
         {
             var path = _fileSstem.Path.GetDirectoryName(targetFilePath);
+
             if (_fileWriter.CheckVerifyFilePath(path))
             {
                 return;

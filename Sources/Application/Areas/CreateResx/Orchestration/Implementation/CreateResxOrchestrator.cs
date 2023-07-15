@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO.Abstractions;
+﻿using System.IO.Abstractions;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.Shell.Interop;
-using VsBuddy.Areas.CreateResx.SubAreas.ResxWriting;
+using VsBuddy.Areas.CreateResx.SubAreas.ResxWriting.Services;
 using VsBuddy.Infrastructure.Roslyn.ClassInformations.Services;
 using VsBuddy.Infrastructure.SolutionMetadata.Services;
 
@@ -13,10 +8,10 @@ namespace VsBuddy.Areas.CreateResx.Orchestration.Implementation
 {
     public class CreateResxOrchestrator : ICreateResxOrchestrator
     {
-        private readonly IVsSolutionFactory _vsSolutionFactory;
-        private readonly IResxWriter _resxWriter;
         private readonly IClassInformationFactory _classInfoFactory;
         private readonly IFileSystem _fileSystem;
+        private readonly IResxWriter _resxWriter;
+        private readonly IVsSolutionFactory _vsSolutionFactory;
 
         public CreateResxOrchestrator(
             IVsSolutionFactory vsSolutionFactory,
@@ -38,7 +33,7 @@ namespace VsBuddy.Areas.CreateResx.Orchestration.Implementation
             var rootNamespace = assetsProj.AssemblyName.Replace("Assets", string.Empty);
             var relativeNamespace = classInfo.NamespaceDecl.Replace(rootNamespace, string.Empty);
             var path = relativeNamespace.Replace(".", "\\");
-     
+
             var resxFileName = $"{classInfo.ClassName}Res.resx";
             var fullpath = _fileSystem.Path.Combine(
                 assetsProj.AssemblyPath,

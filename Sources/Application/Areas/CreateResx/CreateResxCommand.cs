@@ -1,56 +1,35 @@
-﻿using EnvDTE;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using System;
+﻿using System;
 using System.ComponentModel.Design;
-using System.Globalization;
-using System.IO.Packaging;
-using System.Threading;
 using System.Threading.Tasks;
+using EnvDTE;
+using Microsoft.VisualStudio.Shell;
 using VsBuddy.Areas.CreateResx.Orchestration;
 using VsBuddy.Infrastructure.VisualStudio.Context;
-using Task = System.Threading.Tasks.Task;
 
 namespace VsBuddy.Areas.CreateResx
 {
     /// <summary>
-    /// Command handler
+    ///     Command handler
     /// </summary>
     internal sealed class CreateResxCommand
     {
         /// <summary>
-        /// Command ID.
+        ///     Command ID.
         /// </summary>
         public const int CommandId = 256;
 
         /// <summary>
-        /// Command menu group (command set GUID).
+        ///     Command menu group (command set GUID).
         /// </summary>
         public static readonly Guid CommandSet = new Guid("b7895518-1080-4487-b0cc-dfdd70eb0e3e");
 
         /// <summary>
-        /// VS Package that provides this command, not null.
+        ///     VS Package that provides this command, not null.
         /// </summary>
-        private readonly AsyncPackage package;
+        private readonly AsyncPackage _package;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateResxCommand"/> class.
-        /// Adds our command handlers for menu (commands must exist in the command table file)
-        /// </summary>
-        /// <param name="package">Owner package, not null.</param>
-        /// <param name="commandService">Command service to add command to, not null.</param>
-        private CreateResxCommand(AsyncPackage package, OleMenuCommandService commandService)
-        {
-            this.package = package ?? throw new ArgumentNullException(nameof(package));
-            commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
-
-            var menuCommandID = new CommandID(CommandSet, CommandId);
-            var menuItem = new MenuCommand(this.Execute, menuCommandID);
-            commandService.AddCommand(menuItem);
-        }
-
-        /// <summary>
-        /// Gets the instance of the command.
+        ///     Gets the instance of the command.
         /// </summary>
         public static CreateResxCommand Instance
         {
@@ -59,18 +38,28 @@ namespace VsBuddy.Areas.CreateResx
         }
 
         /// <summary>
-        /// Gets the service provider from the owner package.
+        ///     Gets the service provider from the owner package.
         /// </summary>
-        private Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider
+        private IAsyncServiceProvider ServiceProvider => _package;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="CreateResxCommand" /> class.
+        ///     Adds our command handlers for menu (commands must exist in the command table file)
+        /// </summary>
+        /// <param name="package">Owner package, not null.</param>
+        /// <param name="commandService">Command service to add command to, not null.</param>
+        private CreateResxCommand(AsyncPackage package, OleMenuCommandService commandService)
         {
-            get
-            {
-                return this.package;
-            }
+            _package = package ?? throw new ArgumentNullException(nameof(package));
+            commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
+
+            var menuCommandId = new CommandID(CommandSet, CommandId);
+            var menuItem = new MenuCommand(Execute, menuCommandId);
+            commandService.AddCommand(menuItem);
         }
 
         /// <summary>
-        /// Initializes the singleton instance of the command.
+        ///     Initializes the singleton instance of the command.
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
@@ -79,22 +68,24 @@ namespace VsBuddy.Areas.CreateResx
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
-            OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
+            var commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
             Instance = new CreateResxCommand(package, commandService);
         }
 
         /// <summary>
-        /// This function is the callback used to execute the command when the menu item is clicked.
-        /// See the constructor to see how the menu item is associated with this function using
-        /// OleMenuCommandService service and MenuCommand class.
+        ///     This function is the callback used to execute the command when the menu item is clicked.
+        ///     See the constructor to see how the menu item is associated with this function using
+        ///     OleMenuCommandService service and MenuCommand class.
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
+#pragma warning disable VSTHRD100 // Avoid async void methods
         private async void Execute(object sender, EventArgs e)
+#pragma warning restore VSTHRD100 // Avoid async void methods
         {
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(_package.DisposalToken);
 
-            var dte = (DTE)await package.GetServiceAsync(typeof(DTE));
+            var dte = (DTE)await _package.GetServiceAsync(typeof(DTE));
 
             if (dte == null)
             {
@@ -122,7 +113,7 @@ namespace VsBuddy.Areas.CreateResx
                     {
                         var unitTestClassWriter = container.GetInstance<ICreateResxOrchestrator>();
                         unitTestClassWriter.Execute(filePath);
-                    }, package);
+                    }, _package);
 
                 break;
             }
