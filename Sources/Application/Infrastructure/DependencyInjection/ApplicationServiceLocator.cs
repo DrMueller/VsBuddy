@@ -1,7 +1,7 @@
 ﻿using System;
 using StructureMap;
 
-namespace Mmu.Mlvsh.Testing.Application.Infrastructure.DependencyInjection
+namespace VsBuddy.Infrastructure.DependencyInjection
 {
     public static class ApplicationServiceLocator
     {

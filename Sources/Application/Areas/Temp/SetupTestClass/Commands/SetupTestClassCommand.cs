@@ -1,30 +1,26 @@
 ﻿using System;
 using System.ComponentModel.Design;
-using System.Globalization;
-using System.Threading.Tasks;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using VsBuddy.Areas.Temp.ClassWriting.Orchestration.Services;
 using VsBuddy.Areas.Temp.SetupTestClass.Services;
 using VsBuddy.Infrastructure.DependencyInjection;
 
-namespace VsBuddy.Areas.CreateUnitTests
+namespace VsBuddy.Areas.Temp.SetupTestClass.Commands
 {
     /// <summary>
     ///     Command handler
     /// </summary>
-    internal sealed class CreateUnitTestsCommand
+    internal sealed class SetupTestClassCommand
     {
         /// <summary>
         ///     Command ID.
         /// </summary>
-        public const int CommandId = 0x0100;
+        public const int CommandId = 256;
 
         /// <summary>
         ///     Command menu group (command set GUID).
         /// </summary>
-        public static readonly Guid CommandSet = new Guid("da9f6543-d823-4de3-ad47-e95acd553e77");
+        public static readonly Guid CommandSet = new Guid("1111783d-b15f-4523-9e54-e3f923476beb");
 
         /// <summary>
         ///     VS Package that provides this command, not null.
@@ -34,24 +30,15 @@ namespace VsBuddy.Areas.CreateUnitTests
         /// <summary>
         ///     Gets the instance of the command.
         /// </summary>
-        public static CreateUnitTestsCommand Instance
-        {
-            get;
-            private set;
-        }
+        public static SetupTestClassCommand Instance { get; private set; }
 
         /// <summary>
-        ///     Gets the service provider from the owner package.
-        /// </summary>
-        private IAsyncServiceProvider ServiceProvider => _package;
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="CreateUnitTestsCommand" /> class.
+        ///     Initializes a new instance of the <see cref="SetupTestClassCommand" /> class.
         ///     Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private CreateUnitTestsCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private SetupTestClassCommand(AsyncPackage package, OleMenuCommandService commandService)
         {
             _package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -65,14 +52,14 @@ namespace VsBuddy.Areas.CreateUnitTests
         ///     Initializes the singleton instance of the command.
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        public static async Task InitializeAsync(AsyncPackage package)
+        public static async System.Threading.Tasks.Task InitializeAsync(AsyncPackage package)
         {
-            // Switch to the main thread - the call to AddCommand in CreateUnitTestsCommand's constructor requires
+            // Switch to the main thread - the call to AddCommand in SetupTestClassCommand's constructor requires
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             var commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new CreateUnitTestsCommand(package, commandService);
+            Instance = new SetupTestClassCommand(package, commandService);
         }
 
         /// <summary>
@@ -82,10 +69,12 @@ namespace VsBuddy.Areas.CreateUnitTests
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
+#pragma warning disable VSTHRD100 // Avoid async void methods
         private async void Execute(object sender, EventArgs e)
+#pragma warning restore VSTHRD100 // Avoid async void methods
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(_package.DisposalToken);
-            
+
             var dte = (DTE)await _package.GetServiceAsync(typeof(DTE));
             if (dte == null)
             {
@@ -107,8 +96,8 @@ namespace VsBuddy.Areas.CreateUnitTests
                 }
 
                 var filePath = projectItem.FileNames[0];
-                var unitTestClassWriter = ApplicationServiceLocator.GetService<IUnitTestClassWriter>();
-                unitTestClassWriter.CreateTestClass(filePath);
+                var unitTestClassWriter = ApplicationServiceLocator.GetService<ITestClassSetupService>();
+                unitTestClassWriter.SetupTestClass(filePath);
 
                 break;
             }

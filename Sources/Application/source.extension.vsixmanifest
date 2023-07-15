@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="VsBuddy.2a15ff23-edd1-4e5e-b9a0-cc1ffe4da22b" Version="1.0" Language="en-US" Publisher="DrMueller" />
+        <Identity Id="VsBuddy.2a15ff23-edd1-4e5e-b9a0-cc1ffe4da22b" Version="1.0" Language="en-US" Publisher="DrMueller2" />
         <DisplayName>VsBuddy</DisplayName>
         <Description xml:space="preserve">DrMuellers Visual Studio Buddy</Description>
     </Metadata>

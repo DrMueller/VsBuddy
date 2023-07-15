@@ -1,6 +1,7 @@
-﻿using StructureMap;
+﻿using System.IO.Abstractions;
+using StructureMap;
 
-namespace Mmu.Mlvsh.Testing.Application.Infrastructure.DependencyInjection
+namespace VsBuddy.Infrastructure.DependencyInjection
 {
     public class ApplicationRegistry : Registry
     {
@@ -12,6 +13,8 @@ namespace Mmu.Mlvsh.Testing.Application.Infrastructure.DependencyInjection
                     scanner.AssemblyContainingType<ApplicationRegistry>();
                     scanner.WithDefaultConventions();
                 });
+
+            For<IFileSystem>().Use<FileSystem>().Singleton();
         }
     }
 }
