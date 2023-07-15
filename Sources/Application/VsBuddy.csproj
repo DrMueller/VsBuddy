@@ -132,7 +132,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\CreateUnitTests\Resources\CreateUnitTestsCommand.png" />
-    <Content Include="Infrastructure\Assets\M.png" />
+    <Content Include="Infrastructure\Assets\M.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="TODOs.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
