@@ -3,6 +3,8 @@ using System.Linq;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using VsBuddy.Infrastructure.Roslyn.ClassInformations.Models;
+using VsBuddy.Infrastructure.SolutionMetadata.Models;
+using VsBuddy.Infrastructure.Types.Maybes;
 
 namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Services.Implementation
 {
@@ -15,7 +17,7 @@ namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Services.Implementatio
             _fileSystem = fileSystem;
         }
 
-        public ClassInformation Create(string filePath)
+        public ClassInformation Create(string filePath, CsProj project)
         {
             var fileContent = _fileSystem.File.ReadAllText(filePath);
             var tree = CSharpSyntaxTree.ParseText(fileContent);
@@ -28,11 +30,28 @@ namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Services.Implementatio
 
             var fullNamespace = root
                 .DescendantNodes()
-                .OfType<NamespaceDeclarationSyntax>().First()
-                .Name
+                .OfType<NamespaceDeclarationSyntax>().FirstOrDefault()
+                ?.Name
                 .ToString();
 
+            if (string.IsNullOrEmpty(fullNamespace))
+            {
+                var path = _fileSystem.Path.GetDirectoryName(filePath);
+                var relativePath = path.Replace(project.AssemblyPath, string.Empty);
+                var replaced = relativePath.Replace("\\", ".");
+
+                var ns = $"{project.AssemblyName}{replaced}";
+
+                fullNamespace = ns;
+            }
+
             var className = classDeclaration?.Identifier.Text;
+
+            if (string.IsNullOrEmpty(className))
+            {
+                className = _fileSystem.Path.GetFileNameWithoutExtension(filePath);
+            }
+
             var ctorDeclarations = root.DescendantNodes().OfType<ConstructorDeclarationSyntax>();
             var ctors = ctorDeclarations.Select(
                 ctorDecl =>
@@ -58,7 +77,8 @@ namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Services.Implementatio
                 .Select(f => UsingEntry.CreateFrom(f.Name.ToString()))
                 .ToList();
 
-            var classInfo = new ClassInformation(className, fullNamespace, ctors.First(), usingEntries);
+            var ctor = MaybeFactory.CreateFromNullable<Constructor>(ctors.FirstOrDefault());
+            var classInfo = new ClassInformation(className, fullNamespace, ctor, usingEntries);
 
             return classInfo;
         }

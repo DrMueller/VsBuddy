@@ -10,5 +10,10 @@ namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Models
         {
             Parameters = parameters;
         }
+
+        public static Constructor CreateEmpty()
+        {
+            return new Constructor(new List<Parameter>());
+        }
     }
 }

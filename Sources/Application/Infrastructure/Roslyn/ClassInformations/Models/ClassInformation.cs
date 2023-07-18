@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using VsBuddy.Infrastructure.Types.Maybes;
 
 namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Models
 {
@@ -7,14 +8,14 @@ namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Models
     {
         private readonly List<UsingEntry> _usingEntries;
         public string ClassName { get; }
-        public Constructor Constructor { get; }
+        public Maybe<Constructor> Constructor { get; }
         public string NamespaceDecl { get; }
         public IReadOnlyCollection<UsingEntry> SortedUsingEntries => _usingEntries.OrderBy(f => f).ToList();
 
         public ClassInformation(
             string className,
             string namespaceDecl,
-            Constructor constructor,
+            Maybe<Constructor> constructor,
             List<UsingEntry> usingEntries)
         {
             ClassName = className;

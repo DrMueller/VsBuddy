@@ -31,6 +31,14 @@ namespace VsBuddy.Areas.CreateResx.SubAreas.ResxWriting.Services.Implementation
                 return;
             }
 
+            var fn = _fileSstem.Path.GetFileName(targetFilePath);
+
+            if (fn.StartsWith("_"))
+            {
+                var newFn = fn.Substring(1);
+                targetFilePath = _fileSstem.Path.Combine(_fileSstem.Path.GetDirectoryName(targetFilePath), newFn);
+            }
+
             using (var resourceWriter = new ResXResourceWriter(targetFilePath))
             {
                 resourceWriter.Generate();

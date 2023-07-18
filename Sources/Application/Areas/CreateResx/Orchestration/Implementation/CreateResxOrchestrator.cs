@@ -28,9 +28,11 @@ namespace VsBuddy.Areas.CreateResx.Orchestration.Implementation
         public void Execute(string filePath)
         {
             var solution = _vsSolutionFactory.Create(filePath);
-            var classInfo = _classInfoFactory.Create(filePath);
             var assetsProj = solution.Projects.Single(f => f.AssemblyName.EndsWith("Assets"));
+            var csProj = solution.SearchCsProjByPath(filePath);
             var rootNamespace = assetsProj.AssemblyName.Replace("Assets", string.Empty);
+
+            var classInfo = _classInfoFactory.Create(filePath, csProj);
             var relativeNamespace = classInfo.NamespaceDecl.Replace(rootNamespace, string.Empty);
             var path = relativeNamespace.Replace(".", "\\");
 

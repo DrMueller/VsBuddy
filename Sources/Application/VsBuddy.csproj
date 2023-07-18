@@ -83,6 +83,11 @@
     <Compile Include="Infrastructure\SolutionMetadata\Services\Implementation\CsProjectFilesLocator.cs" />
     <Compile Include="Infrastructure\SolutionMetadata\Services\Implementation\VsSolutionFactory.cs" />
     <Compile Include="Infrastructure\SolutionMetadata\Services\IVsSolutionFactory.cs" />
+    <Compile Include="Infrastructure\Types\Maybes\Implementation\None.cs" />
+    <Compile Include="Infrastructure\Types\Maybes\Implementation\Some.cs" />
+    <Compile Include="Infrastructure\Types\Maybes\Maybe.cs" />
+    <Compile Include="Infrastructure\Types\Maybes\MaybeAdapter.cs" />
+    <Compile Include="Infrastructure\Types\Maybes\MaybeFactory.cs" />
     <Compile Include="Infrastructure\VisualStudio\Context\VsContext.cs" />
     <Compile Include="Infrastructure\VisualStudio\Messaging\Models\MessageType.cs" />
     <Compile Include="Infrastructure\VisualStudio\Messaging\Services\IMessageService.cs" />
@@ -107,6 +112,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Mvc">
+      <Version>5.2.9</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNet.Razor">
+      <Version>3.2.9</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis">
       <Version>4.0.1</Version>
     </PackageReference>

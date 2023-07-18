@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using VsBuddy.Infrastructure.Roslyn.ClassInformations.Models;
+using VsBuddy.Infrastructure.Types.Maybes;
 
 namespace VsBuddy.Areas.CreateUnitTests.SubAreas.ClassContentCreation.Services.Servants.Implementation
 {
@@ -44,7 +45,9 @@ namespace VsBuddy.Areas.CreateUnitTests.SubAreas.ClassContentCreation.Services.S
 
         public IClassBuilder AppendFields()
         {
-            foreach (var param in _classInfo.Constructor.Parameters)
+            var ctor = _classInfo.Constructor.Reduce(Constructor.CreateEmpty);
+
+            foreach (var param in ctor.Parameters)
             {
                 _classDeclaration = _classDeclaration.AddMembers(
                     CreatePrivateField($"Mock<{param.ParameterType}>", "_" + param.ParameterName, true));
@@ -65,7 +68,9 @@ namespace VsBuddy.Areas.CreateUnitTests.SubAreas.ClassContentCreation.Services.S
             var statements = new List<StatementSyntax>();
             var sb = new StringBuilder();
 
-            foreach (var ctorParam in _classInfo.Constructor.Parameters)
+            var ctor = _classInfo.Constructor.Reduce(Constructor.CreateEmpty);
+
+            foreach (var ctorParam in ctor.Parameters)
             {
                 statements.Add(
                     SyntaxFactory.ParseStatement($"_{ctorParam.ParameterName}= new Mock<{ctorParam.ParameterType}>();"));
@@ -73,12 +78,12 @@ namespace VsBuddy.Areas.CreateUnitTests.SubAreas.ClassContentCreation.Services.S
 
             sb.AppendLine($"_sut = new {_classInfo.ClassName}(");
 
-            for (var i = 0; i < _classInfo.Constructor.Parameters.Count; i++)
+            for (var i = 0; i < ctor.Parameters.Count; i++)
             {
-                var ctorParam = _classInfo.Constructor.Parameters.ElementAt(i);
+                var ctorParam = ctor.Parameters.ElementAt(i);
                 sb.Append($"_{ctorParam.ParameterName}.Object");
 
-                if (i < _classInfo.Constructor.Parameters.Count - 1)
+                if (i < ctor.Parameters.Count - 1)
                 {
                     sb.AppendLine(",");
                 }
