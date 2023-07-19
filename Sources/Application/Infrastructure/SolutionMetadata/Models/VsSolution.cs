@@ -44,7 +44,7 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Models
                 }
             }
 
-            throw new Exception($"Project with namespace {classNamespace} not found.");
+            throw new Exception($"Project with namespace '{classNamespace}' not found.");
         }
 
         public CsProj SearchCsProjByPath(

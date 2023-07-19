@@ -27,7 +27,7 @@ namespace VsBuddy.Areas.CreateUnitTests.Orchestration.Services.Implementation
         public void CreateTestClass(string fileToTestPath)
         {
             var vsSolution = _vsSolutionFactory.Create(fileToTestPath);
-            var classCsProj = vsSolution.SearchByNamespace(fileToTestPath);
+            var classCsProj = vsSolution.SearchCsProjByPath(fileToTestPath);
 
             var classInfo = _classInfoFactory.Create(fileToTestPath, classCsProj);
             var unitTestsCsProj = vsSolution.SearchByNamespace(classInfo.NamespaceDecl, "UnitTests");

@@ -61,7 +61,7 @@ namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Services.Implementatio
                         .Select(
                             f =>
                             {
-                                var typeName = ((IdentifierNameSyntax)f.Type).Identifier.Text;
+                                var typeName = f.Type?.GetText().ToString();
                                 var parameterName = f.Identifier.Text;
 
                                 return new Parameter(typeName, parameterName);
