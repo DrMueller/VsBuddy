@@ -26,9 +26,10 @@ namespace VsBuddy.Infrastructure.FilreWriting.Services.Implementation
                 return true;
             }
 
-            if (!_fileSystem.Directory.Exists(filePath))
+            var dir = _fileSystem.Path.GetDirectoryName(filePath);
+            if (!_fileSystem.Directory.Exists(dir))
             {
-                _fileSystem.Directory.CreateDirectory(filePath);
+                _fileSystem.Directory.CreateDirectory(dir);
             }
 
             return false;
@@ -42,7 +43,6 @@ namespace VsBuddy.Infrastructure.FilreWriting.Services.Implementation
             }
 
             _fileSystem.File.WriteAllText(filePath, content);
-
             _messageService.ShowMessage($"File '{filePath}' created.", MessageType.Info);
         }
     }
