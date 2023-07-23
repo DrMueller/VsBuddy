@@ -23,7 +23,7 @@ namespace VsBuddy.Areas.CreateUnitTests.SubAreas.ClassContentCreation.Services.I
         {
             var cls = _classBuilder.Initialize(classInfo)
                 .AppendFields()
-                .AppendSetupMethod()
+                .AppendConstructor()
                 .AppendExamplaryMethod()
                 .Build();
 

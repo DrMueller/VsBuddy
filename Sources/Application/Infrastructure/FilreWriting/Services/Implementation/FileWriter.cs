@@ -27,6 +27,7 @@ namespace VsBuddy.Infrastructure.FilreWriting.Services.Implementation
             }
 
             var dir = _fileSystem.Path.GetDirectoryName(filePath);
+
             if (!_fileSystem.Directory.Exists(dir))
             {
                 _fileSystem.Directory.CreateDirectory(dir);

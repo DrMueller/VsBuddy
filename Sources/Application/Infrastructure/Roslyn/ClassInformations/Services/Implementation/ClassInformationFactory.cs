@@ -77,7 +77,7 @@ namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Services.Implementatio
                 .Select(f => UsingEntry.CreateFrom(f.Name.ToString()))
                 .ToList();
 
-            var ctor = MaybeFactory.CreateFromNullable<Constructor>(ctors.FirstOrDefault());
+            var ctor = MaybeFactory.CreateFromNullable(ctors.FirstOrDefault());
             var classInfo = new ClassInformation(className, fullNamespace, ctor, usingEntries);
 
             return classInfo;

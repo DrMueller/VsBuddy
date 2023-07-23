@@ -18,9 +18,11 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Services.Implementation
                 .Select(f => new ProjectReference(f.Attribute("Include").Value))
                 .ToList();
 
+            var assemblyName = GetAssemblyName(filePath, xDoc);
+
             return new CsProj(
                 Path.GetDirectoryName(filePath),
-                Path.GetFileName(filePath).Replace(".csproj", string.Empty),
+                assemblyName,
                 packageReferences,
                 projectReferences,
                 CreatePropertyGroup(xDoc),
@@ -52,6 +54,19 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Services.Implementation
             var generateAssemblyInfo = string.IsNullOrEmpty(generateAssemblyInfoConfig) || bool.Parse(generateAssemblyInfoConfig);
 
             return new PropertyGroup(nullableEnabled, generateAssemblyInfo);
+        }
+
+        private static string GetAssemblyName(string filePath, XDocument xDoc)
+        {
+            var assemblyName = xDoc.Descendants().SingleOrDefault(f => f.Name == "PropertyGroup")?
+                .Descendants().SingleOrDefault(f => f.Name == "AssemblyName")?.Value;
+
+            if (string.IsNullOrEmpty(assemblyName))
+            {
+                assemblyName = Path.GetFileName(filePath).Replace(".csproj", string.Empty);
+            }
+
+            return assemblyName;
         }
     }
 }

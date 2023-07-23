@@ -5,11 +5,10 @@ namespace VsBuddy.Areas.CreateUnitTests.SubAreas.ClassContentCreation.Services.S
 {
     public interface IClassBuilder
     {
+        IClassBuilder AppendConstructor();
         IClassBuilder AppendExamplaryMethod();
 
         IClassBuilder AppendFields();
-
-        IClassBuilder AppendSetupMethod();
 
         ClassDeclarationSyntax Build();
 

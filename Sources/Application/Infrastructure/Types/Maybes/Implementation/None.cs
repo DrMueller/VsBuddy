@@ -8,11 +8,11 @@ namespace VsBuddy.Infrastructure.Types.Maybes.Implementation
         Justification = "Helper to avoid generic parsing")]
     public class None
     {
+        public static None Value { get; } = new None();
+
         private None()
         {
         }
-
-        public static None Value { get; } = new None();
     }
 
     [SuppressMessage(

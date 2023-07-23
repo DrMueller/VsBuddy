@@ -14,6 +14,48 @@ namespace VsBuddy.Areas.CreateUnitTests.SubAreas.ClassContentCreation.Services.S
         private ClassDeclarationSyntax _classDeclaration;
         private ClassInformation _classInfo;
 
+        public IClassBuilder AppendConstructor()
+        {
+            var statements = new List<StatementSyntax>();
+            var sb = new StringBuilder();
+
+            var ctor = _classInfo.Constructor.Reduce(Constructor.CreateEmpty);
+
+            foreach (var ctorParam in ctor.Parameters)
+            {
+                statements.Add(
+                    SyntaxFactory.ParseStatement($"_{ctorParam.ParameterName}= new Mock<{ctorParam.ParameterType}>();"));
+            }
+
+            sb.AppendLine($"_sut = new {_classInfo.ClassName}(");
+
+            for (var i = 0; i < ctor.Parameters.Count; i++)
+            {
+                var ctorParam = ctor.Parameters.ElementAt(i);
+                sb.Append($"_{ctorParam.ParameterName}.Object");
+
+                if (i < ctor.Parameters.Count - 1)
+                {
+                    sb.AppendLine(",");
+                }
+            }
+
+            sb.AppendLine(");");
+
+            var str = sb.ToString();
+            statements.Add(SyntaxFactory.ParseStatement(str));
+
+            var setupMethod = SyntaxFactory.ConstructorDeclaration(_classDeclaration.Identifier.ToString());
+
+            setupMethod = setupMethod
+                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
+                .WithBody(SyntaxFactory.Block(statements));
+
+            _classDeclaration = _classDeclaration.AddMembers(setupMethod);
+
+            return this;
+        }
+
         public IClassBuilder AppendExamplaryMethod()
         {
             var statements = new List<StatementSyntax>
@@ -59,50 +101,6 @@ namespace VsBuddy.Areas.CreateUnitTests.SubAreas.ClassContentCreation.Services.S
                 true);
 
             _classDeclaration = _classDeclaration.AddMembers(sutField);
-
-            return this;
-        }
-
-        public IClassBuilder AppendSetupMethod()
-        {
-            var statements = new List<StatementSyntax>();
-            var sb = new StringBuilder();
-
-            var ctor = _classInfo.Constructor.Reduce(Constructor.CreateEmpty);
-
-            foreach (var ctorParam in ctor.Parameters)
-            {
-                statements.Add(
-                    SyntaxFactory.ParseStatement($"_{ctorParam.ParameterName}= new Mock<{ctorParam.ParameterType}>();"));
-            }
-
-            sb.AppendLine($"_sut = new {_classInfo.ClassName}(");
-
-            for (var i = 0; i < ctor.Parameters.Count; i++)
-            {
-                var ctorParam = ctor.Parameters.ElementAt(i);
-                sb.Append($"_{ctorParam.ParameterName}.Object");
-
-                if (i < ctor.Parameters.Count - 1)
-                {
-                    sb.AppendLine(",");
-                }
-                else
-                {
-                    sb.AppendLine(");");
-                }
-            }
-
-            var str = sb.ToString();
-            statements.Add(SyntaxFactory.ParseStatement(str));
-
-            var setupMethod = SyntaxFactory.ConstructorDeclaration(_classDeclaration.Identifier.ToString());
-
-            setupMethod = setupMethod
-                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
-                .WithBody(SyntaxFactory.Block(statements));
-
-            _classDeclaration = _classDeclaration.AddMembers(setupMethod);
 
             return this;
         }
