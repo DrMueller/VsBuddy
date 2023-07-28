@@ -42,7 +42,7 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Services.Implementation
 
         private static PropertyGroup CreatePropertyGroup(XContainer xDoc)
         {
-            var propGroupDoc = xDoc.Descendants().SingleOrDefault(f => f.Name == "PropertyGroup");
+            var propGroupDoc = GetPropertyGroup(xDoc);
 
             if (propGroupDoc == null)
             {
@@ -58,7 +58,7 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Services.Implementation
 
         private static string GetAssemblyName(string filePath, XDocument xDoc)
         {
-            var assemblyName = xDoc.Descendants().SingleOrDefault(f => f.Name == "PropertyGroup")?
+            var assemblyName = GetPropertyGroup(xDoc)?
                 .Descendants().SingleOrDefault(f => f.Name == "AssemblyName")?.Value;
 
             if (string.IsNullOrEmpty(assemblyName))
@@ -67,6 +67,11 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Services.Implementation
             }
 
             return assemblyName;
+        }
+
+        private static XElement GetPropertyGroup(XContainer doc)
+        {
+            return doc.Descendants().SingleOrDefault(f => f.Name == "PropertyGroup" && f.Attribute("Condition") == null);
         }
     }
 }

@@ -17,14 +17,24 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Services.Implementation
 
         private static DirectoryInfo GetSourcesDirectory(string sourceFilePath)
         {
-            var currentDir = new DirectoryInfo(sourceFilePath);
+            var currentDir = new DirectoryInfo(sourceFilePath).Parent;
 
-            while (!currentDir.FullName.EndsWith("Sources"))
+            while (!IsSourcesFolder(currentDir) && !ContainsSlnFile(currentDir))
             {
                 currentDir = currentDir.Parent;
             }
 
             return currentDir;
+        }
+
+        private static bool IsSourcesFolder(DirectoryInfo dir)
+        {
+            return dir.Name.EndsWith("Sources");
+        }
+
+        private static bool ContainsSlnFile(DirectoryInfo dir)
+        {
+            return dir.GetFiles().Any(f => f.Name.EndsWith(".sln", System.StringComparison.OrdinalIgnoreCase));
         }
     }
 }
