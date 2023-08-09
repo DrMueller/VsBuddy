@@ -33,7 +33,12 @@ namespace VsBuddy.Areas.CreateResx.Orchestration.Implementation
             var rootNamespace = assetsProj.AssemblyName.Replace("Assets", string.Empty);
 
             var classInfo = _classInfoFactory.Create(filePath, csProj);
-            var relativeNamespace = classInfo.NamespaceDecl.Replace(rootNamespace, string.Empty);
+
+            var relativeNamespace = classInfo
+                .NamespaceDecl
+                .Replace(rootNamespace, string.Empty)
+                .Replace(".Implementation", string.Empty);
+            
             var path = relativeNamespace.Replace(".", "\\");
 
             var resxFileName = $"{classInfo.ClassName}Res.resx";
