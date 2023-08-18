@@ -24,7 +24,7 @@ namespace VsBuddy.Areas.CreateUnitTests.SubAreas.ClassContentCreation.Services.S
             foreach (var ctorParam in ctor.Parameters)
             {
                 statements.Add(
-                    SyntaxFactory.ParseStatement($"_{ctorParam.ParameterName}= new Mock<{ctorParam.ParameterType}>();"));
+                    SyntaxFactory.ParseStatement($"_{ctorParam.ParameterName}Mock= new Mock<{ctorParam.ParameterType}>();"));
             }
 
             sb.AppendLine($"_sut = new {_classInfo.ClassName}(");
@@ -32,7 +32,7 @@ namespace VsBuddy.Areas.CreateUnitTests.SubAreas.ClassContentCreation.Services.S
             for (var i = 0; i < ctor.Parameters.Count; i++)
             {
                 var ctorParam = ctor.Parameters.ElementAt(i);
-                sb.Append($"_{ctorParam.ParameterName}.Object");
+                sb.Append($"_{ctorParam.ParameterName}Mock.Object");
 
                 if (i < ctor.Parameters.Count - 1)
                 {
@@ -92,7 +92,7 @@ namespace VsBuddy.Areas.CreateUnitTests.SubAreas.ClassContentCreation.Services.S
             foreach (var param in ctor.Parameters)
             {
                 _classDeclaration = _classDeclaration.AddMembers(
-                    CreatePrivateField($"Mock<{param.ParameterType}>", "_" + param.ParameterName, true));
+                    CreatePrivateField($"Mock<{param.ParameterType}>", $"_{param.ParameterName}Mock", true));
             }
 
             var sutField = CreatePrivateField(

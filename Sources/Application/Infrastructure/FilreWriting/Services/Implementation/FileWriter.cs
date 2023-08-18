@@ -43,6 +43,12 @@ namespace VsBuddy.Infrastructure.FilreWriting.Services.Implementation
                 return;
             }
 
+            if (_fileSystem.File.Exists(filePath))
+            {
+                _messageService.ShowMessage($"File '{filePath}' already existing.", MessageType.Warning);
+                return;
+            }
+
             _fileSystem.File.WriteAllText(filePath, content);
             _messageService.ShowMessage($"File '{filePath}' created.", MessageType.Info);
         }

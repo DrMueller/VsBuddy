@@ -66,7 +66,8 @@ namespace VsBuddy.Areas.CreateUnitTests.SubAreas.ClassContentCreation.Services.I
         {
             var relativeNamespacePart = classInfo
                 .NamespaceDecl
-                .Replace(classCsProj.AssemblyName, unitTestsCsProj.AssemblyName);
+                .Replace(classCsProj.AssemblyName, unitTestsCsProj.AssemblyName)
+                .Replace(".Implementation", string.Empty);
 
             var ns = SyntaxFactory
                 .NamespaceDeclaration(SyntaxFactory.ParseName(relativeNamespacePart))
