@@ -26,9 +26,9 @@ jobs:
 
   steps:
   - task: NuGetToolInstaller@1
-    displayName: 'Use NuGet 4.4.1'
+    displayName: 'Use NuGet 5.4.0'
     inputs:
-      versionSpec: 4.4.1
+      versionSpec: 5.4.0
 
   - task: NuGetCommand@2
     displayName: 'NuGet restore'
