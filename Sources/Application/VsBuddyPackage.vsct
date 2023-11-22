@@ -41,6 +41,9 @@
 			<Group guid="guidVsBuddyPackageCmdSet" id="MyMenuGroup" priority="0x0600">
 				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
 			</Group>
+			<Group guid="guidVsBuddyPackageCmdSet2" id="MyMenuGroup" priority="0x0600">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_TOOL_PROJWIN" />
+			</Group>
 		</Groups>
 
 		<!--Buttons section. -->
@@ -68,6 +71,13 @@
 					<ButtonText>Create RESX</ButtonText>
 				</Strings>
 			</Button>
+			<Button guid="guidVsBuddyPackageCmdSet2" id="cmdidClearCssCommand" priority="0x0100" type="Button">
+				<Parent guid="guidVsBuddyPackageCmdSet2" id="MyMenuGroup" />
+				<Icon guid="guidImages2" id="bmpPic1" />
+				<Strings>
+					<ButtonText>Clear CSS</ButtonText>
+				</Strings>
+			</Button>
 		</Buttons>
 
 		<!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -79,6 +89,8 @@
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
 			<Bitmap guid="guidImages" href="Infrastructure\Assets\CreateUnitTestsCommand.png" usedList="bmpPic1" />
 			<Bitmap guid="guidImages1" href="Infrastructure\Assets\CreateResxCommand.png" usedList="bmpPic1" />
+			<Bitmap guid="guidImages2" href="Infrastructure\Assets\M_Small.png"
+					usedList="bmpPic1" />
 		</Bitmaps>
 	</Commands>
 
@@ -103,6 +115,20 @@
 
 		<GuidSymbol value="{d26eb45b-9b66-4842-bf59-e6a1a1d834c6}" name="guidImages1">
 			<IDSymbol name="bmpPic1" value="1" />
+		</GuidSymbol>
+
+		<GuidSymbol value="{77208b7c-bee7-4d44-b0d5-779d48bcdcfe}" name="guidVsBuddyPackageCmdSet2">
+			<IDSymbol value="4128" name="MyMenuGroup" />
+			<IDSymbol value="256" name="cmdidClearCssCommand" />
+		</GuidSymbol>
+
+		<GuidSymbol value="{56b14f44-c850-4e4c-8d0b-367e096d16dd}" name="guidImages2">
+			<IDSymbol name="bmpPic1" value="1" />
+			<IDSymbol name="bmpPic2" value="2" />
+			<IDSymbol name="bmpPicSearch" value="3" />
+			<IDSymbol name="bmpPicX" value="4" />
+			<IDSymbol name="bmpPicArrows" value="5" />
+			<IDSymbol name="bmpPicStrikethrough" value="6" />
 		</GuidSymbol>
 	</Symbols>
 </CommandTable>

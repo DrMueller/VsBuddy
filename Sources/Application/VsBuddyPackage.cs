@@ -25,6 +25,7 @@ namespace VsBuddy
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await CreateUnitTestsCommand.InitializeAsync(this);
             await CreateResxCommand.InitializeAsync(this);
+            await VsBuddy.Areas.ClearCss.ClearCssCommand.InitializeAsync(this);
         }
 
         #endregion
