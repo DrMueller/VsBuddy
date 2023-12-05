@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -13,6 +14,11 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Services.Implementation
             return Directory
                 .GetFiles(sourcesDir.FullName, "*.csproj", SearchOption.AllDirectories)
                 .ToList();
+        }
+
+        private static bool ContainsSlnFile(DirectoryInfo dir)
+        {
+            return dir.GetFiles().Any(f => f.Name.EndsWith(".sln", StringComparison.OrdinalIgnoreCase));
         }
 
         private static DirectoryInfo GetSourcesDirectory(string sourceFilePath)
@@ -30,11 +36,6 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Services.Implementation
         private static bool IsSourcesFolder(DirectoryInfo dir)
         {
             return dir.Name.EndsWith("Sources");
-        }
-
-        private static bool ContainsSlnFile(DirectoryInfo dir)
-        {
-            return dir.GetFiles().Any(f => f.Name.EndsWith(".sln", System.StringComparison.OrdinalIgnoreCase));
         }
     }
 }

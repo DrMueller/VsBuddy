@@ -24,12 +24,12 @@ namespace VsBuddy.Areas.CreateUnitTests.SubAreas.TestFileWriting.Services.Implem
             CsProj unitTestsCsProj)
         {
             var rootNamespace = unitTestsCsProj.AssemblyName.Replace("UnitTests", string.Empty);
-            
+
             var relativePath = classInfo
                 .NamespaceDecl
                 .Replace(rootNamespace, string.Empty)
                 .Replace(".Implementation", string.Empty);
-            
+
             var path = relativePath.Replace(".", "\\");
             var fullpath = _fileSystem.Path.Combine(unitTestsCsProj.AssemblyPath, path);
 

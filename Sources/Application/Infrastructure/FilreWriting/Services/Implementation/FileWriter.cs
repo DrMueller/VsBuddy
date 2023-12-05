@@ -46,6 +46,7 @@ namespace VsBuddy.Infrastructure.FilreWriting.Services.Implementation
             if (_fileSystem.File.Exists(filePath))
             {
                 _messageService.ShowMessage($"File '{filePath}' already existing.", MessageType.Warning);
+
                 return;
             }
 

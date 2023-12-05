@@ -37,7 +37,7 @@ namespace VsBuddy.Areas.ClearCss.Services.Implementation
             {
                 return;
             }
-            
+
             var cssFiles = Directory.GetFiles(directoryPath, "*.css");
 
             foreach (var cssFile in cssFiles)
@@ -55,4 +55,3 @@ namespace VsBuddy.Areas.ClearCss.Services.Implementation
         }
     }
 }
-

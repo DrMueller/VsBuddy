@@ -1,10 +1,12 @@
 ﻿using System.IO.Abstractions;
 using System.Linq;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using VsBuddy.Infrastructure.Roslyn.ClassInformations.Models;
 using VsBuddy.Infrastructure.SolutionMetadata.Models;
 using VsBuddy.Infrastructure.Types.Maybes;
+using VsBuddy.Infrastructure.Types.Maybes.Implementation;
 
 namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Services.Implementation
 {
@@ -52,35 +54,71 @@ namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Services.Implementatio
                 className = _fileSystem.Path.GetFileNameWithoutExtension(filePath);
             }
 
-            var ctorDeclarations = root.DescendantNodes().OfType<ConstructorDeclarationSyntax>();
-            var ctors = ctorDeclarations.Select(
-                ctorDecl =>
-                {
-                    var ctorParams = ctorDecl.DescendantNodes()
-                        .OfType<ParameterSyntax>()
-                        .Select(
-                            f =>
-                            {
-                                var typeName = f.Type?.GetText().ToString();
-                                var parameterName = f.Identifier.Text;
-
-                                return new Parameter(typeName, parameterName);
-                            })
-                        .ToList();
-
-                    return new Constructor(ctorParams);
-                }).ToList();
-
             var usingEntries = root
                 .DescendantNodes()
                 .OfType<UsingDirectiveSyntax>()
                 .Select(f => UsingEntry.CreateFrom(f.Name.ToString()))
                 .ToList();
 
-            var ctor = MaybeFactory.CreateFromNullable(ctors.FirstOrDefault());
+            var ctor = CreateConstructor(root);
             var classInfo = new ClassInformation(className, fullNamespace, ctor, usingEntries);
 
             return classInfo;
+        }
+
+        private static Maybe<Constructor> CreateConstructor(SyntaxNode root)
+        {
+            var ctorDeclarations = root.DescendantNodes().OfType<ConstructorDeclarationSyntax>();
+            var ctors = ctorDeclarations.Select(
+                ctorDecl =>
+                {
+                    var ctorParams = ctorDecl.DescendantNodes()
+                        .OfType<ParameterSyntax>()
+                        .Select(MapSyntax)
+                        .ToList();
+
+                    return new Constructor(ctorParams);
+                }).ToList();
+
+            var ctor = ctors.FirstOrDefault();
+
+            if (ctor == null)
+            {
+                return TryCreatingFromPrimaryConstructor(root);
+            }
+
+            return ctor;
+        }
+
+        private static Parameter MapSyntax(ParameterSyntax syntax)
+        {
+            return new Parameter(syntax.Type?.GetText().ToString(), syntax.Identifier.Text);
+        }
+
+        private static Maybe<Constructor> TryCreatingFromPrimaryConstructor(SyntaxNode root)
+        {
+            var classDeclaration = root
+                .DescendantNodes()
+                .OfType<ClassDeclarationSyntax>()
+                .Single();
+
+            var paramsListSyntax = classDeclaration
+                .ChildNodes()
+                .OfType<ParameterListSyntax>()
+                .SingleOrDefault();
+
+            if (paramsListSyntax == null)
+            {
+                return None.Value;
+            }
+
+            var parms = paramsListSyntax
+                .ChildNodes()
+                .OfType<ParameterSyntax>()
+                .Select(MapSyntax)
+                .ToList();
+
+            return new Constructor(parms);
         }
     }
 }

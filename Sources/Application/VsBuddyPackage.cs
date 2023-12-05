@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell;
+using VsBuddy.Areas.ClearCss;
 using VsBuddy.Areas.CreateResx;
 using VsBuddy.Areas.CreateUnitTests;
 
@@ -25,7 +26,7 @@ namespace VsBuddy
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await CreateUnitTestsCommand.InitializeAsync(this);
             await CreateResxCommand.InitializeAsync(this);
-            await VsBuddy.Areas.ClearCss.ClearCssCommand.InitializeAsync(this);
+            await ClearCssCommand.InitializeAsync(this);
         }
 
         #endregion
