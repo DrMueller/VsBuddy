@@ -14,7 +14,8 @@ namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Services.Implementatio
     {
         private readonly IFileSystem _fileSystem;
 
-        public ClassInformationFactory(IFileSystem fileSystem)
+        public ClassInformationFactory(
+            IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;
         }
@@ -97,13 +98,20 @@ namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Services.Implementatio
 
         private static Maybe<Constructor> TryCreatingFromPrimaryConstructor(SyntaxNode root)
         {
-            var classDeclaration = root
+            var classDeclarations = root
                 .DescendantNodes()
                 .OfType<ClassDeclarationSyntax>()
-                .Single();
+                .ToList();
 
-            var paramsListSyntax = classDeclaration
-                .ChildNodes()
+            // Seems like blazor files behave diferently, let's skip
+            if (classDeclarations.Count > 1)
+            {
+                return None.Value;
+            }
+
+            var classDeclaration = classDeclarations.SingleOrDefault();
+
+            var paramsListSyntax = classDeclaration?.ChildNodes()
                 .OfType<ParameterListSyntax>()
                 .SingleOrDefault();
 
