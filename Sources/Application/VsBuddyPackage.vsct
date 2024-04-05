@@ -65,7 +65,13 @@
 					<ButtonText>Create unit tests</ButtonText>
 				</Strings>
 			</Button>
-
+			<Button guid="guidVsBuddyPackageCmdSet3" id="cmdidCreateBlazorUnitTestsCommand" priority="0x0100" type="Button">
+				<Parent guid="guidVsBuddyPackageCmdSet" id="MyMenuGroup" />
+				<Icon guid="guidImages" id="bmpPic1" />
+				<Strings>
+					<ButtonText>Create Blazor unit tests</ButtonText>
+				</Strings>
+			</Button>
 			<Button guid="guidVsBuddyPackageCmdSet1" id="cmdidCreateResxCommand" priority="0x0100" type="Button">
 				<Parent guid="guidVsBuddyPackageCmdSet" id="MyMenuGroup" />
 				<Icon guid="guidImages1" id="bmpPic1" />
@@ -80,13 +86,7 @@
 					<ButtonText>Clear CSS</ButtonText>
 				</Strings>
 			</Button>
-			<Button guid="guidVsBuddyPackageCmdSet3" id="cmdidCreateBlazorUnitTestsCommand" priority="0x0100" type="Button">
-				<Parent guid="guidVsBuddyPackageCmdSet" id="MyMenuGroup" />
-				<Icon guid="guidImages" id="bmpPic1" />
-				<Strings>
-					<ButtonText>Create Blazor unit tests</ButtonText>
-				</Strings>
-			</Button>
+	
 		</Buttons>
 
 		<!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
