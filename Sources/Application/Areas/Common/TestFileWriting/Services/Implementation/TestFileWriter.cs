@@ -3,7 +3,7 @@ using VsBuddy.Infrastructure.FilreWriting.Services;
 using VsBuddy.Infrastructure.Roslyn.ClassInformations.Models;
 using VsBuddy.Infrastructure.SolutionMetadata.Models;
 
-namespace VsBuddy.Areas.CreateUnitTests.SubAreas.TestFileWriting.Services.Implementation
+namespace VsBuddy.Areas.Common.TestFileWriting.Services.Implementation
 {
     public class TestFileWriter : ITestFileWriter
     {

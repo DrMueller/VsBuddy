@@ -1,20 +1,20 @@
 ﻿using VsBuddy.Areas.Common.TestFileWriting.Services;
-using VsBuddy.Areas.CreateUnitTests.SubAreas.ClassContentCreation.Services;
+using VsBuddy.Areas.CreateBlazorUnitTests.SubAreas.ClassContentCreation.Services;
 using VsBuddy.Infrastructure.Roslyn.ClassInformations.Services;
 using VsBuddy.Infrastructure.SolutionMetadata.Services;
 
-namespace VsBuddy.Areas.CreateUnitTests.Orchestration.Services.Implementation
+namespace VsBuddy.Areas.CreateBlazorUnitTests.Orchestration.Services.Implementation
 {
-    public class UnitTestClassWriter : IUnitTestClassWriter
+    public class BlazorUnitTestClassWriter : IBlazorUnitTestClassWriter
     {
-        private readonly IClassContentFactory _classContentFactory;
+        private readonly IBlazorClassContentFactory _classContentFactory;
         private readonly IClassInformationFactory _classInfoFactory;
         private readonly ITestFileWriter _testFileWriter;
         private readonly IVsSolutionFactory _vsSolutionFactory;
 
-        public UnitTestClassWriter(
+        public BlazorUnitTestClassWriter(
             IClassInformationFactory classInfoFactory,
-            IClassContentFactory classContentFactory,
+            IBlazorClassContentFactory classContentFactory,
             ITestFileWriter testFileWriter,
             IVsSolutionFactory vsSolutionFactory)
         {

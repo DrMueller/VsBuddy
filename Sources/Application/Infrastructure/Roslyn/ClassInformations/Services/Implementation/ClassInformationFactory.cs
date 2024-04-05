@@ -1,4 +1,5 @@
-﻿using System.IO.Abstractions;
+﻿using System.Collections.Generic;
+using System.IO.Abstractions;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -62,7 +63,9 @@ namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Services.Implementatio
                 .ToList();
 
             var ctor = CreateConstructor(root);
-            var classInfo = new ClassInformation(className, fullNamespace, ctor, usingEntries);
+            var injections = CreateInjections(root);
+
+            var classInfo = new ClassInformation(className, fullNamespace, ctor, usingEntries, injections);
 
             return classInfo;
         }
@@ -89,6 +92,17 @@ namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Services.Implementatio
             }
 
             return ctor;
+        }
+
+        private static IReadOnlyCollection<Parameter> CreateInjections(SyntaxNode root)
+        {
+            var properties = root.DescendantNodes()
+                .OfType<PropertyDeclarationSyntax>();
+
+            var injectProperties = properties.Where(f => f.AttributeLists.Any(g => g.Attributes.Any(h => h.Name.ToString() == "Inject"))).ToList();
+
+            return injectProperties.Select(f => new Parameter(f.Type.GetText().ToString(), f.Identifier.Text))
+                .ToList();
         }
 
         private static Parameter MapSyntax(ParameterSyntax syntax)

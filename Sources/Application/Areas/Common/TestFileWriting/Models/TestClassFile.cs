@@ -1,4 +1,4 @@
-﻿namespace VsBuddy.Areas.CreateUnitTests.SubAreas.TestFileWriting.Models
+﻿namespace VsBuddy.Areas.Common.TestFileWriting.Models
 {
     public class TestClassFile
     {

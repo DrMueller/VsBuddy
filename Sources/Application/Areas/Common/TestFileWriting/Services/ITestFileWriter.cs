@@ -1,7 +1,7 @@
 ﻿using VsBuddy.Infrastructure.Roslyn.ClassInformations.Models;
 using VsBuddy.Infrastructure.SolutionMetadata.Models;
 
-namespace VsBuddy.Areas.CreateUnitTests.SubAreas.TestFileWriting.Services
+namespace VsBuddy.Areas.Common.TestFileWriting.Services
 {
     public interface ITestFileWriter
     {

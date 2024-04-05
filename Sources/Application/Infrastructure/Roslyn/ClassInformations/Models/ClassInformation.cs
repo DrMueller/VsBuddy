@@ -12,15 +12,19 @@ namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Models
         public string NamespaceDecl { get; }
         public IReadOnlyCollection<UsingEntry> SortedUsingEntries => _usingEntries.OrderBy(f => f).ToList();
 
+        public IReadOnlyCollection<Parameter> Injections { get; }
+
         public ClassInformation(
             string className,
             string namespaceDecl,
             Maybe<Constructor> constructor,
-            List<UsingEntry> usingEntries)
+            List<UsingEntry> usingEntries,
+            IReadOnlyCollection<Parameter> injections)
         {
             ClassName = className;
             NamespaceDecl = namespaceDecl;
             Constructor = constructor;
+            Injections = injections;
             _usingEntries = usingEntries;
         }
 
