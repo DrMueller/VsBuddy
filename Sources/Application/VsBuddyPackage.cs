@@ -3,10 +3,10 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell;
-using VsBuddy.Areas.ClearCss;
-using VsBuddy.Areas.CreateBlazorUnitTests;
-using VsBuddy.Areas.CreateResx;
-using VsBuddy.Areas.CreateUnitTests;
+using VsBuddy.Areas.Files.CssFilesClearing;
+using VsBuddy.Areas.Testing.CreateBlazorUnitTests;
+using VsBuddy.Areas.Testing.CreateUnitTests;
+using VsBuddy.Areas.Translations.CreateResx;
 
 namespace VsBuddy
 {

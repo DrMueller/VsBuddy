@@ -45,21 +45,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Areas\ClearCss\ClearCssCommand.cs" />
-    <Compile Include="Areas\ClearCss\Services\ICssClearer.cs" />
-    <Compile Include="Areas\ClearCss\Services\Implementation\CssClearer.cs" />
-    <Compile Include="Areas\CreateBlazorUnitTests\CreateBlazorUnitTestsCommand.cs" />
-    <Compile Include="Areas\CreateBlazorUnitTests\Orchestration\Services\Implementation\BlazorUnitTestClassWriter.cs" />
-    <Compile Include="Areas\CreateBlazorUnitTests\Orchestration\Services\IBlazorUnitTestClassWriter.cs" />
-    <Compile Include="Areas\CreateBlazorUnitTests\SubAreas\ClassContentCreation\Services\IBlazorClassContentFactory.cs" />
-    <Compile Include="Areas\CreateBlazorUnitTests\SubAreas\ClassContentCreation\Services\Implementation\BlazorClassContentFactory.cs" />
-    <Compile Include="Areas\CreateBlazorUnitTests\SubAreas\ClassContentCreation\Services\Servants\IBlazorClassBuilder.cs" />
-    <Compile Include="Areas\CreateBlazorUnitTests\SubAreas\ClassContentCreation\Services\Servants\Implementation\BlazorClassBuilder.cs" />
-    <Compile Include="Areas\CreateResx\CreateResxCommand.cs" />
-    <Compile Include="Areas\CreateResx\Orchestration\ICreateResxOrchestrator.cs" />
-    <Compile Include="Areas\CreateResx\Orchestration\Implementation\CreateResxOrchestrator.cs" />
-    <Compile Include="Areas\CreateResx\SubAreas\ResxWriting\Services\Implementation\ResxWriter.cs" />
-    <Compile Include="Areas\CreateResx\SubAreas\ResxWriting\Services\IResxWriter.cs" />
+    <Compile Include="Areas\Files\CssFilesClearing\ClearCssCommand.cs" />
+    <Compile Include="Areas\Files\CssFilesClearing\Services\ICssClearer.cs" />
+    <Compile Include="Areas\Files\CssFilesClearing\Services\Implementation\CssClearer.cs" />
+    <Compile Include="Areas\Testing\CreateBlazorUnitTests\CreateBlazorUnitTestsCommand.cs" />
+    <Compile Include="Areas\Testing\CreateBlazorUnitTests\Orchestration\Services\Implementation\BlazorUnitTestClassWriter.cs" />
+    <Compile Include="Areas\Testing\CreateBlazorUnitTests\Orchestration\Services\IBlazorUnitTestClassWriter.cs" />
+    <Compile Include="Areas\Testing\CreateBlazorUnitTests\SubAreas\ClassContentCreation\Services\IBlazorClassContentFactory.cs" />
+    <Compile Include="Areas\Testing\CreateBlazorUnitTests\SubAreas\ClassContentCreation\Services\Implementation\BlazorClassContentFactory.cs" />
+    <Compile Include="Areas\Testing\CreateBlazorUnitTests\SubAreas\ClassContentCreation\Services\Servants\IBlazorClassBuilder.cs" />
+    <Compile Include="Areas\Testing\CreateBlazorUnitTests\SubAreas\ClassContentCreation\Services\Servants\Implementation\BlazorClassBuilder.cs" />
+    <Compile Include="Areas\Translations\CreateResx\CreateResxCommand.cs" />
+    <Compile Include="Areas\Translations\CreateResx\Orchestration\ICreateResxOrchestrator.cs" />
+    <Compile Include="Areas\Translations\CreateResx\Orchestration\Implementation\CreateResxOrchestrator.cs" />
+    <Compile Include="Areas\Translations\CreateResx\SubAreas\ResxWriting\Services\Implementation\ResxWriter.cs" />
+    <Compile Include="Areas\Translations\CreateResx\SubAreas\ResxWriting\Services\IResxWriter.cs" />
     <Compile Include="Infrastructure\FilreWriting\Services\IFileWriter.cs" />
     <Compile Include="Infrastructure\FilreWriting\Services\Implementation\FileWriter.cs" />
     <Compile Include="Infrastructure\Roslyn\ClassInformations\Models\ClassInformation.cs" />
@@ -68,16 +68,16 @@
     <Compile Include="Infrastructure\Roslyn\ClassInformations\Models\UsingEntry.cs" />
     <Compile Include="Infrastructure\Roslyn\ClassInformations\Services\IClassInformationFactory.cs" />
     <Compile Include="Infrastructure\Roslyn\ClassInformations\Services\Implementation\ClassInformationFactory.cs" />
-    <Compile Include="Areas\CreateUnitTests\Orchestration\Services\Implementation\UnitTestClassWriter.cs" />
-    <Compile Include="Areas\CreateUnitTests\Orchestration\Services\IUnitTestClassWriter.cs" />
-    <Compile Include="Areas\CreateUnitTests\SubAreas\ClassContentCreation\Services\IClassContentFactory.cs" />
-    <Compile Include="Areas\CreateUnitTests\SubAreas\ClassContentCreation\Services\Implementation\ClassContentFactory.cs" />
-    <Compile Include="Areas\CreateUnitTests\SubAreas\ClassContentCreation\Services\Servants\IClassBuilder.cs" />
-    <Compile Include="Areas\CreateUnitTests\SubAreas\ClassContentCreation\Services\Servants\Implementation\ClassBuilder.cs" />
-    <Compile Include="Areas\Common\TestFileWriting\Models\TestClassFile.cs" />
-    <Compile Include="Areas\Common\TestFileWriting\Services\Implementation\TestFileWriter.cs" />
-    <Compile Include="Areas\Common\TestFileWriting\Services\ITestFileWriter.cs" />
-    <Compile Include="Areas\CreateUnitTests\CreateUnitTestsCommand.cs" />
+    <Compile Include="Areas\Testing\CreateUnitTests\Orchestration\Services\Implementation\UnitTestClassWriter.cs" />
+    <Compile Include="Areas\Testing\CreateUnitTests\Orchestration\Services\IUnitTestClassWriter.cs" />
+    <Compile Include="Areas\Testing\CreateUnitTests\SubAreas\ClassContentCreation\Services\IClassContentFactory.cs" />
+    <Compile Include="Areas\Testing\CreateUnitTests\SubAreas\ClassContentCreation\Services\Implementation\ClassContentFactory.cs" />
+    <Compile Include="Areas\Testing\CreateUnitTests\SubAreas\ClassContentCreation\Services\Servants\IClassBuilder.cs" />
+    <Compile Include="Areas\Testing\CreateUnitTests\SubAreas\ClassContentCreation\Services\Servants\Implementation\ClassBuilder.cs" />
+    <Compile Include="Areas\Testing\Shared\TestFileWriting\Models\TestClassFile.cs" />
+    <Compile Include="Areas\Testing\Shared\TestFileWriting\Services\Implementation\TestFileWriter.cs" />
+    <Compile Include="Areas\Testing\Shared\TestFileWriting\Services\ITestFileWriter.cs" />
+    <Compile Include="Areas\Testing\CreateUnitTests\CreateUnitTestsCommand.cs" />
     <Compile Include="Infrastructure\DependencyInjection\ApplicationRegistry.cs" />
     <Compile Include="Infrastructure\DependencyInjection\ApplicationServiceLocator.cs" />
     <Compile Include="Infrastructure\SolutionMetadata\Models\CsProj.cs" />
@@ -156,7 +156,7 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\ClearCss\Resources\ClearCssCommand.png" />
+    <Content Include="Areas\Files\CssFilesClearing\Resources\ClearCssCommand.png" />
     <Content Include="Infrastructure\Assets\CreateResxCommand.png" />
     <Content Include="Infrastructure\Assets\CreateUnitTestsCommand.png" />
     <Content Include="Infrastructure\Assets\M.png">
