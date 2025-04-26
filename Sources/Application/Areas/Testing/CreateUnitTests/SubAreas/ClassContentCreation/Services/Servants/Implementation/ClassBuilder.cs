@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using VsBuddy.Infrastructure;
 using VsBuddy.Infrastructure.Roslyn.ClassInformations.Models;
 using VsBuddy.Infrastructure.Types.Maybes;
 
@@ -24,7 +25,7 @@ namespace VsBuddy.Areas.Testing.CreateUnitTests.SubAreas.ClassContentCreation.Se
             foreach (var ctorParam in ctor.Parameters)
             {
                 statements.Add(
-                    SyntaxFactory.ParseStatement($"_{ctorParam.ParameterName}Mock= new Mock<{ctorParam.ParameterType}>();"));
+                    SyntaxFactory.ParseStatement($"_{ctorParam.ParameterName.FirstCharToLower()}Mock= new Mock<{ctorParam.ParameterType}>();"));
             }
 
             sb.AppendLine($"_sut = new {_classInfo.ClassName}(");

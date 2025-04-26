@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using VsBuddy.Infrastructure;
 using VsBuddy.Infrastructure.Roslyn.ClassInformations.Models;
 using VsBuddy.Infrastructure.Types.Maybes;
 
@@ -23,13 +24,13 @@ namespace VsBuddy.Areas.Testing.CreateBlazorUnitTests.SubAreas.ClassContentCreat
             foreach (var ctorParam in ctor.Parameters)
             {
                 statements.Add(
-                    SyntaxFactory.ParseStatement($"_{ctorParam.ParameterName}Mock= new Mock<{ctorParam.ParameterType}>();"));
+                    SyntaxFactory.ParseStatement($"_{ctorParam.ParameterName.FirstCharToLower()}Mock= new Mock<{ctorParam.ParameterType}>();"));
             }
 
             foreach (var injection in _classInfo.Injections)
             {
                 statements.Add(
-                    SyntaxFactory.ParseStatement($"_{injection.ParameterName}Mock= new Mock<{injection.ParameterType}>();"));
+                    SyntaxFactory.ParseStatement($"_{injection.ParameterName.FirstCharToLower()}Mock= new Mock<{injection.ParameterType}>();"));
             }
             
             statements.Add(SyntaxFactory.ParseStatement(string.Empty).WithTrailingTrivia(SyntaxFactory.CarriageReturnLineFeed));
@@ -37,7 +38,7 @@ namespace VsBuddy.Areas.Testing.CreateBlazorUnitTests.SubAreas.ClassContentCreat
             foreach (var injection in _classInfo.Injections)
             {
                 statements.Add(
-                    SyntaxFactory.ParseStatement($"Services.AddSingleton(_{injection.ParameterName}Mock.Object);"));
+                    SyntaxFactory.ParseStatement($"Services.AddSingleton(_{injection.ParameterName.FirstCharToLower()}Mock.Object);"));
             }
 
             statements.Add(SyntaxFactory.ParseStatement(string.Empty).WithTrailingTrivia(SyntaxFactory.CarriageReturnLineFeed));
@@ -111,7 +112,7 @@ namespace VsBuddy.Areas.Testing.CreateBlazorUnitTests.SubAreas.ClassContentCreat
             foreach (var inj in _classInfo.Injections)
             {
                 _classDeclaration = _classDeclaration.AddMembers(
-                    CreatePrivateField($"Mock<{inj.ParameterType}>", $"_{inj.ParameterName}Mock", true));
+                    CreatePrivateField($"Mock<{inj.ParameterType}>", $"_{inj.ParameterName.FirstCharToLower()}Mock", true));
             }
 
             var sutField = SyntaxFactory.FieldDeclaration(

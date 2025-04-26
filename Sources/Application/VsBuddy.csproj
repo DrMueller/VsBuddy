@@ -93,6 +93,7 @@
     <Compile Include="Infrastructure\SolutionMetadata\Services\Implementation\CsProjectFilesLocator.cs" />
     <Compile Include="Infrastructure\SolutionMetadata\Services\Implementation\VsSolutionFactory.cs" />
     <Compile Include="Infrastructure\SolutionMetadata\Services\IVsSolutionFactory.cs" />
+    <Compile Include="Infrastructure\StringExtensions.cs" />
     <Compile Include="Infrastructure\Types\Maybes\Implementation\None.cs" />
     <Compile Include="Infrastructure\Types\Maybes\Implementation\Some.cs" />
     <Compile Include="Infrastructure\Types\Maybes\Maybe.cs" />

@@ -31,7 +31,7 @@ namespace VsBuddy.Areas.Testing.CreateBlazorUnitTests.SubAreas.ClassContentCreat
             nameSpace = nameSpace.AddMembers(cls);
 
             var syntaxFactory = SyntaxFactory.CompilationUnit();
-            syntaxFactory = AppendUsings(syntaxFactory, classInfo);
+            syntaxFactory = AppendUsings(syntaxFactory, classInfo, unitTestCsProj);
             syntaxFactory = syntaxFactory.AddMembers(nameSpace);
 
             var classContent = syntaxFactory
@@ -43,7 +43,8 @@ namespace VsBuddy.Areas.Testing.CreateBlazorUnitTests.SubAreas.ClassContentCreat
 
         private static CompilationUnitSyntax AppendUsings(
             CompilationUnitSyntax syntaxFactory,
-            ClassInformation classInfo)
+            ClassInformation classInfo,
+            CsProj unitTestProject)
         {
             classInfo.AppendUsing(UsingEntry.CreateFrom("Bunit"));
             classInfo.AppendUsing(UsingEntry.CreateFrom("Microsoft.Extensions.DependencyInjection"));
@@ -51,6 +52,10 @@ namespace VsBuddy.Areas.Testing.CreateBlazorUnitTests.SubAreas.ClassContentCreat
             classInfo.AppendUsing(UsingEntry.CreateFrom("Xunit"));
 
             classInfo.AppendUsing(UsingEntry.CreateFrom(classInfo.NamespaceDecl));
+
+            var jsRefExtension = $"{unitTestProject.AssemblyName}.TestingInfrastructure";
+
+            classInfo.AppendUsing(UsingEntry.CreateFrom(jsRefExtension));
 
             foreach (var usingName in classInfo.SortedUsingEntries)
             {
