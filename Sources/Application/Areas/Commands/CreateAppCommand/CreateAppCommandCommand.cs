@@ -26,7 +26,7 @@ namespace VsBuddy.Areas.Commands.CreateAppCommand
         /// <summary>
         ///     VS Package that provides this command, not null.
         /// </summary>
-        private readonly AsyncPackage package;
+        private readonly AsyncPackage _package;
 
         /// <summary>
         ///     Gets the instance of the command.
@@ -40,7 +40,7 @@ namespace VsBuddy.Areas.Commands.CreateAppCommand
         /// <summary>
         ///     Gets the service provider from the owner package.
         /// </summary>
-        private IAsyncServiceProvider ServiceProvider => package;
+        private IAsyncServiceProvider ServiceProvider => _package;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="CreateAppCommandCommand" /> class.
@@ -50,7 +50,7 @@ namespace VsBuddy.Areas.Commands.CreateAppCommand
         /// <param name="commandService">Command service to add command to, not null.</param>
         private CreateAppCommandCommand(AsyncPackage package, OleMenuCommandService commandService)
         {
-            this.package = package ?? throw new ArgumentNullException(nameof(package));
+            _package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
             var menuCommandID = new CommandID(CommandSet, CommandId);
@@ -72,10 +72,12 @@ namespace VsBuddy.Areas.Commands.CreateAppCommand
             Instance = new CreateAppCommandCommand(package, commandService);
         }
 
+#pragma warning disable VSTHRD100 // Avoid async void methods
         private async void Execute(object sender, EventArgs e)
+#pragma warning restore VSTHRD100 // Avoid async void methods
         {
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
-            var selectedItems = await SelectedItemsHelper.GetSelectedProjectItemsAsync(package);
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(_package.DisposalToken);
+            var selectedItems = await SelectedItemsHelper.GetSelectedProjectItemsAsync(_package);
 
             foreach (var item in selectedItems)
             {
@@ -85,7 +87,7 @@ namespace VsBuddy.Areas.Commands.CreateAppCommand
                     {
                         var appCommandWriter = container.GetInstance<IAppCommandWriter>();
                         appCommandWriter.CreateAppCommand(filePath);
-                    }, package);
+                    }, _package);
             }
         }
     }

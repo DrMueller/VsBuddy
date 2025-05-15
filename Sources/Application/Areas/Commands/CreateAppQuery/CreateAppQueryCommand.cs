@@ -30,7 +30,7 @@ namespace VsBuddy.Areas.Commands.CreateAppQuery
         /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
-        private readonly AsyncPackage package;
+        private readonly AsyncPackage _package;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateAppQueryCommand"/> class.
@@ -40,11 +40,11 @@ namespace VsBuddy.Areas.Commands.CreateAppQuery
         /// <param name="commandService">Command service to add command to, not null.</param>
         private CreateAppQueryCommand(AsyncPackage package, OleMenuCommandService commandService)
         {
-            this.package = package ?? throw new ArgumentNullException(nameof(package));
+            _package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
             var menuCommandID = new CommandID(CommandSet, CommandId);
-            var menuItem = new MenuCommand(this.Execute, menuCommandID);
+            var menuItem = new MenuCommand(Execute, menuCommandID);
             commandService.AddCommand(menuItem);
         }
 
@@ -64,7 +64,7 @@ namespace VsBuddy.Areas.Commands.CreateAppQuery
         {
             get
             {
-                return this.package;
+                return _package;
             }
         }
 
@@ -78,14 +78,16 @@ namespace VsBuddy.Areas.Commands.CreateAppQuery
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
-            OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
+            var commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
             Instance = new CreateAppQueryCommand(package, commandService);
         }
 
+#pragma warning disable VSTHRD100 // Avoid async void methods
         private async void Execute(object sender, EventArgs e)
+#pragma warning restore VSTHRD100 // Avoid async void methods
         {
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
-            var selectedItems = await SelectedItemsHelper.GetSelectedProjectItemsAsync(package);
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(_package.DisposalToken);
+            var selectedItems = await SelectedItemsHelper.GetSelectedProjectItemsAsync(_package);
 
             foreach (var item in selectedItems)
             {
@@ -95,7 +97,7 @@ namespace VsBuddy.Areas.Commands.CreateAppQuery
                     {
                         var appCommandWriter = container.GetInstance<IAppQueryWriter>();
                         appCommandWriter.CreateAppQuery(filePath);
-                    }, package);
+                    }, _package);
             }
         }
     }
