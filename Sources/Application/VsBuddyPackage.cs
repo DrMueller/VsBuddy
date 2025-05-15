@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell;
+using VsBuddy.Areas.Commands.CreateAppCommand;
 using VsBuddy.Areas.Files.CssFilesClearing;
 using VsBuddy.Areas.Testing.CreateBlazorUnitTests;
 using VsBuddy.Areas.Testing.CreateUnitTests;
@@ -24,6 +25,9 @@ namespace VsBuddy
             await CreateResxCommand.InitializeAsync(this);
             await ClearCssCommand.InitializeAsync(this);
             await CreateBlazorUnitTestsCommand.InitializeAsync(this);
+            await CreateAppCommandCommand.InitializeAsync(this);
+            await VsBuddy.Areas.Commands.CreateAppQuery.CreateAppQueryCommand.InitializeAsync(this);
+            await VsBuddy.Areas.Maps.CreateMap.CreateMapCommand.InitializeAsync(this);
         }
     }
 }

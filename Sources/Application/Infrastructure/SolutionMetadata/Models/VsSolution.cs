@@ -6,14 +6,6 @@ namespace VsBuddy.Infrastructure.SolutionMetadata.Models
 {
     public class VsSolution
     {
-        private static readonly IReadOnlyCollection<string> _namespacesToIgnore = new
-            List<string>
-            {
-                "Analyzers",
-                "CodeAnalysis",
-                "Microsoft.NET.Test.Sdk"
-            };
-
         public IReadOnlyCollection<CsProj> Projects { get; }
 
         public VsSolution(IReadOnlyCollection<CsProj> projects)

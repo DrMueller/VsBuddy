@@ -64,10 +64,27 @@ namespace VsBuddy.Infrastructure.Roslyn.ClassInformations.Services.Implementatio
 
             var ctor = CreateConstructor(root);
             var injections = CreateInjections(root);
+            var properties = CreateProperties(root);
 
-            var classInfo = new ClassInformation(className, fullNamespace, ctor, usingEntries, injections);
+            var classInfo = new ClassInformation(
+                className, 
+                fullNamespace, 
+                ctor, 
+                usingEntries, 
+                injections, 
+                properties);
 
             return classInfo;
+        }
+
+        private static IReadOnlyCollection<Property> CreateProperties(SyntaxNode root)
+        {
+            var propertyDeclarations = root.DescendantNodes().OfType<PropertyDeclarationSyntax>();
+
+            var properties = propertyDeclarations.Select(
+                propDecl => new Property(propDecl.Modifiers.Single(), propDecl.Identifier, propDecl.Type)).ToList();
+
+            return properties;
         }
 
         private static Maybe<Constructor> CreateConstructor(SyntaxNode root)

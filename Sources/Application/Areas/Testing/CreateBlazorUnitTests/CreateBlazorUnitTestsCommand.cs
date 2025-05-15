@@ -7,6 +7,7 @@ using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using VsBuddy.Areas.Testing.CreateBlazorUnitTests.Orchestration.Services;
 using VsBuddy.Infrastructure.VisualStudio.Context;
+using VsBuddy.Infrastructure.VisualStudio.Helpers;
 using Task = System.Threading.Tasks.Task;
 
 namespace VsBuddy.Areas.Testing.CreateBlazorUnitTests
@@ -57,7 +58,7 @@ namespace VsBuddy.Areas.Testing.CreateBlazorUnitTests
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(_package.DisposalToken);
 
-            var selectedItems = await GetSelectedItemsAsync();
+            var selectedItems = await SelectedItemsHelper.GetSelectedProjectItemsAsync(_package);
 
             if (selectedItems == null)
             {
@@ -84,20 +85,6 @@ namespace VsBuddy.Areas.Testing.CreateBlazorUnitTests
             }
         }
 
-        private async Task<SelectedItems> GetSelectedItemsAsync()
-        {
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(_package.DisposalToken);
-
-            var dte = (DTE)await _package.GetServiceAsync(typeof(DTE));
-
-            if (dte == null)
-            {
-                throw new ArgumentNullException(nameof(dte));
-            }
-
-            return dte.SelectedItems;
-        }
-
 #pragma warning disable VSTHRD100 // Avoid async void methods
         private async void MenuItem_BeforeQueryStatus(object sender, EventArgs e)
 #pragma warning restore VSTHRD100 // Avoid async void methods
@@ -110,7 +97,7 @@ namespace VsBuddy.Areas.Testing.CreateBlazorUnitTests
             {
                 command.Visible = false; // Default to not visible
 
-                var selectedItems = await GetSelectedItemsAsync();
+                var selectedItems = await SelectedItemsHelper.GetSelectedProjectItemsAsync(_package);
 
                 if (selectedItems == null)
                 {

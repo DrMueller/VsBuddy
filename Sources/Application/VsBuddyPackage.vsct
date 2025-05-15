@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable"
-			xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
 	<!--  This is the file that defines the actual layout and type of the commands.
         It is divided in different sections (e.g. command definition, command
@@ -45,7 +44,13 @@
 				<Parent guid="guidSHLMainMenu" id="IDM_VS_TOOL_PROJWIN" />
 			</Group>
 
-		</Groups>
+		  <Group guid="guidVsBuddyPackageCmdSet4" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_FOLDERNODE" />
+      </Group>
+      <Group guid="guidVsBuddyPackageCmdSet5" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      </Group>
+    </Groups>
 
 		<!--Buttons section. -->
 		<!--This section defines the elements the user can interact with, like a menu command or a button
@@ -87,7 +92,28 @@
 				</Strings>
 			</Button>
 	
-		</Buttons>
+		  <Button guid="guidVsBuddyPackageCmdSet4" id="cmdidCreateAppCommandCommand" priority="0x0100" type="Button">
+			<Parent guid="guidVsBuddyPackageCmdSet4" id="MyMenuGroup" />
+			<Icon guid="guidImages" id="bmpPic1" />
+			<Strings>
+			  <ButtonText>Create app command</ButtonText>
+			</Strings>
+      </Button>
+      <Button guid="guidVsBuddyPackageCmdSet5" id="cmdidCreateAppQueryCommand" priority="0x0100" type="Button">
+		<Parent guid="guidVsBuddyPackageCmdSet4" id="MyMenuGroup" />
+		<Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Create app query</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidVsBuddyPackageCmdSet5" id="cmdidCreateMapCommand" priority="0x0100" type="Button">
+		<Parent guid="guidVsBuddyPackageCmdSet" id="MyMenuGroup" />
+		<Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Create map</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
 
 		<!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
 		<Bitmaps>
@@ -99,7 +125,7 @@
 			<Bitmap guid="guidImages" href="Infrastructure\Assets\CreateUnitTestsCommand.png" usedList="bmpPic1" />
 			<Bitmap guid="guidImages1" href="Infrastructure\Assets\CreateResxCommand.png" usedList="bmpPic1" />
 			<Bitmap guid="guidImages2" href="Infrastructure\Assets\M_Small.png" usedList="bmpPic1" />
-		</Bitmaps>
+    </Bitmaps>
 	</Commands>
 
 	<Symbols>
@@ -152,7 +178,20 @@
 			<IDSymbol name="bmpPicArrows" value="5" />
 			<IDSymbol name="bmpPicStrikethrough" value="6" />
 		</GuidSymbol>
-	</Symbols>
+	
+    <GuidSymbol value="{11a3b512-be12-4c23-b6d1-de8e4dcf8948}" name="guidVsBuddyPackageCmdSet4">
+      <IDSymbol value="4128" name="MyMenuGroup" />
+      <IDSymbol value="256" name="cmdidCreateAppCommandCommand" />
+    </GuidSymbol>
+
+  
+    <GuidSymbol value="{8c71ff22-0433-45de-a393-3a4aff4bda10}" name="guidVsBuddyPackageCmdSet5">
+      <IDSymbol value="4128" name="MyMenuGroup" />
+      <IDSymbol value="256" name="cmdidCreateAppQueryCommand" />
+      <IDSymbol value="4129" name="cmdidCreateMapCommand" />
+    </GuidSymbol>
+
+  </Symbols>
 
 
 
